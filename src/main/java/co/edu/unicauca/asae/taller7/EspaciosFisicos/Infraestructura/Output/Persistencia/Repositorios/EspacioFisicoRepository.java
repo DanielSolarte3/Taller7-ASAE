@@ -10,17 +10,17 @@ import java.time.LocalTime;
 import java.util.List;
 
 public interface EspacioFisicoRepository extends JpaRepository<EspacioFisicoEntity, Integer> {
-    List<EspacioFisicoEntity> findOrderByNombreStartingWithAndCapacidadGreaterThanEqual(String patron, Integer capacidad);
+        List<EspacioFisicoEntity> findByNombreStartingWithIgnoreCaseAndCapacidadGreaterThanEqualOrderByNombreAsc(String patron, Integer capacidad);
 
-    @Query("SELECT CASE WHEN COUNT(fh) > 0 THEN true ELSE false END " +
-           "FROM FranjaHorariaEntity fh " +
-           "WHERE fh.espacioFisico.espacioFisicoId = :espacioFisicoId " +
-           "AND fh.dia = :dia " +
-           "AND ((fh.horaInicio < :horaFin AND fh.horaFin > :horaInicio))")
-    boolean isEspacioOcupado(@Param("espacioFisicoId") Integer espacioFisicoId, @Param("dia") String dia, @Param("horaInicio") LocalTime horaInicio, @Param("horaFin") LocalTime horaFin);
-    
+        @Query("SELECT CASE WHEN COUNT(fh) > 0 THEN true ELSE false END " +
+                        "FROM FranjaHorariaEntity fh " +
+                        "WHERE fh.espacioFisico.espacioFisicoId = :espacioFisicoId " +
+                        "AND fh.dia = :dia " +
+                        "AND ((fh.horaInicio < :horaFin AND fh.horaFin > :horaInicio))")
+        boolean isEspacioOcupado(@Param("espacioFisicoId") Integer espacioFisicoId, @Param("dia") String dia,
+                        @Param("horaInicio") LocalTime horaInicio, @Param("horaFin") LocalTime horaFin);
 
-    @Modifying
-    @Query("UPDATE EspacioFisicoEntity es set es.estado = :estado where es.espacioFisicoId= :id")
-    void updateEstadoEspacioFisico(Integer id, Boolean estado);
+        @Modifying
+        @Query("UPDATE EspacioFisicoEntity es set es.estado = :estado where es.espacioFisicoId= :id")
+        void updateEstadoEspacioFisico(Integer id, Boolean estado);
 }
