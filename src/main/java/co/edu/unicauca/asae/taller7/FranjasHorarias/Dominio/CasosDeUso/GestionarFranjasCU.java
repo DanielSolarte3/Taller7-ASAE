@@ -5,6 +5,8 @@ import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output.GestionarF
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.FranjaHoraria;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 public class GestionarFranjasCU implements GestionarFranjasCUPort {
     private final GestionarFranjasGatewayPort gestionarFranjasGatewayPort;
@@ -12,5 +14,10 @@ public class GestionarFranjasCU implements GestionarFranjasCUPort {
     @Override
     public FranjaHoraria guardarFranjaIn(FranjaHoraria franjaHoraria) {
         return gestionarFranjasGatewayPort.guardarFranjaOut(franjaHoraria);
+    }
+
+    @Override
+    public List<FranjaHoraria> listarFranjasPorCursoIn(Integer cursoId) {
+        return gestionarFranjasGatewayPort.listarFranjasPorCursoOut(cursoId);
     }
 }
