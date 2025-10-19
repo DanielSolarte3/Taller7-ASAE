@@ -1,0 +1,8 @@
+package co.edu.unicauca.asae.taller7.Docentes.Infraestructura.Output.Persistencia.Repositorios;
+
+import co.edu.unicauca.asae.taller7.Docentes.Infraestructura.Output.Persistencia.Entidades.AdministrativoEntity;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AdministrativoRepository extends JpaRepository<AdministrativoEntity, Integer> {
+}
