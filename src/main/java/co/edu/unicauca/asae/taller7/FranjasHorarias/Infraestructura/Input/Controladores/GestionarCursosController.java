@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 @RequestMapping("/curso")
 @RequiredArgsConstructor
-public class CursoRestController {
+public class GestionarCursosController {
     private final GestionarCursosCUPort gestionarCursosCUPort;
     private final CursosDTOMapper cursosDTOMapper;
 
-    @GetMapping("/cursosPorNombreAsignatura")
+    @GetMapping("/cursosPorNombreAsignatura/{nombreAsignatura}")
     public ResponseEntity<List<CursoDTORespuesta>> listarPorNombreDeAsignatura(@PathVariable String nombreAsignatura) {
         ResponseEntity<List<CursoDTORespuesta>> respuesta = new ResponseEntity<List<CursoDTORespuesta>>(cursosDTOMapper.toDTOList(this.gestionarCursosCUPort.buscarCursosPorNombreAsignaturaIn(nombreAsignatura)),HttpStatus.OK);
 
