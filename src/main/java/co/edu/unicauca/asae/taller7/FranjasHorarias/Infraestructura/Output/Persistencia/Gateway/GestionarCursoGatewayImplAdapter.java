@@ -2,6 +2,7 @@ package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Pers
 
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output.GestionarCursosGatewayPort;
@@ -11,6 +12,7 @@ import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Persi
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Persistencia.Repositorios.CursoRepository;
 
 @Service
+@RequiredArgsConstructor
 public class GestionarCursoGatewayImplAdapter implements GestionarCursosGatewayPort {
 
     private final CursoRepository cursoRepository;
