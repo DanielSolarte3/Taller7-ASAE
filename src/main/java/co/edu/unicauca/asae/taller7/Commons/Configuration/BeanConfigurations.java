@@ -8,9 +8,7 @@ import co.edu.unicauca.asae.taller7.EspaciosFisicos.Dominio.CasosDeUso.Gestionar
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output.GestionarCursosGatewayPort;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output.GestionarFranjasGatewayPort;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CadenaDeResponsabilidad.ValidadorDocenteLibre;
-import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CadenaDeResponsabilidad.ValidadorEspacioActivo;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CadenaDeResponsabilidad.ValidadorEspacioLibre;
-import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CadenaDeResponsabilidad.ValidadorHorarioPermitido;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CasosDeUso.GestionarCursosCU;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CasosDeUso.GestionarFranjasCU;
 
@@ -18,25 +16,20 @@ import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CasosDeUso.Gestionar
 public class BeanConfigurations {
 
     @Bean
-    public ValidadorHorarioPermitido ConfigChain(GestionarFranjasGatewayPort objGestionarFranjasGatewayPort) {
-        ValidadorHorarioPermitido validadorHorarioPermitido = new ValidadorHorarioPermitido();
-        ValidadorEspacioActivo validadorEspacioActivo = new ValidadorEspacioActivo();
+    public ValidadorEspacioLibre ConfigChain(GestionarFranjasGatewayPort objGestionarFranjasGatewayPort) {
         ValidadorEspacioLibre validadorEspacioLibre = new ValidadorEspacioLibre(objGestionarFranjasGatewayPort);
         ValidadorDocenteLibre validadorDocenteLibre = new ValidadorDocenteLibre(objGestionarFranjasGatewayPort);
 
-        validadorHorarioPermitido.setSiguiente(validadorEspacioActivo);
-        validadorEspacioActivo.setSiguiente(validadorEspacioLibre);
         validadorEspacioLibre.setSiguiente(validadorDocenteLibre);
 
-        return validadorHorarioPermitido;
+        return validadorEspacioLibre;
     }
 
     @Bean
     public GestionarEspaciosFisicosCU crearGestionarEspaciosFisicosCU(
             GestionarEspaciosFisicosGatewayPort objGestionarEspaciosFisicosGateway) {
-        GestionarEspaciosFisicosCU objGestionarEspaciosFisicosCU = new GestionarEspaciosFisicosCU(
+        return new GestionarEspaciosFisicosCU(
                 objGestionarEspaciosFisicosGateway);
-        return objGestionarEspaciosFisicosCU;
     }
 
     @Bean
@@ -46,8 +39,8 @@ public class BeanConfigurations {
 
     @Bean
     public GestionarFranjasCU crearGestionarFranjasCU(GestionarFranjasGatewayPort objGestionarFranjasGatewayPort,
-                                                      ValidadorHorarioPermitido validadorHorarioPermitido) {
-        return new GestionarFranjasCU(objGestionarFranjasGatewayPort, validadorHorarioPermitido);
+                                                      ValidadorEspacioLibre validadorEspacioLibre) {
+        return new GestionarFranjasCU(objGestionarFranjasGatewayPort, validadorEspacioLibre);
     }
 
 }

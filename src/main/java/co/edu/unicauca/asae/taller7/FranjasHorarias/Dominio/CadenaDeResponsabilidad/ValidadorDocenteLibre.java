@@ -14,7 +14,13 @@ public class ValidadorDocenteLibre extends ValidadorBase{
 
     @Override
     protected boolean manejarValidacion(FranjaHoraria franjaHoraria) {
-        List<FranjaHoraria> listaFranjas = gestionarFranjasGateway.listarFranjas();
+
+        for(Docente docente : franjaHoraria.getDocentes()){
+            if (gestionarFranjasGateway.docenteEstaOcupado(docente.getPersonaId(), franjaHoraria.getDia(), franjaHoraria.getHoraInicio(), franjaHoraria.getHoraFin())){
+                return
+            }
+        }
+        /*List<FranjaHoraria> listaFranjas = gestionarFranjasGateway.listarFranjas();
         if(listaFranjas.isEmpty()){
             return true;
         }
@@ -45,7 +51,7 @@ public class ValidadorDocenteLibre extends ValidadorBase{
                     }
                 }
             }
-        }
+        }*/
         return true;
     }
 }
