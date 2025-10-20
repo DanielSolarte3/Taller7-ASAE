@@ -1,35 +1,32 @@
 package co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CadenaDeResponsabilidad;
 
-import co.edu.unicauca.asae.Taller03.CapaAccesoADatos.Models.DocenteEntity;
-import co.edu.unicauca.asae.Taller03.CapaAccesoADatos.Models.FranjaHorariaEntity;
-import co.edu.unicauca.asae.Taller03.FachadaServicios.DTO.SaveFranjaDTORespuesta;
-import co.edu.unicauca.asae.Taller03.FachadaServicios.Services.Interfaces.IFranjaHorariaService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import co.edu.unicauca.asae.taller7.Docentes.Dominio.Modelos.Docente;
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output.GestionarFranjasGatewayPort;
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.FranjaHoraria;
+import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
+import java.util.List;
 
-@Component
+@RequiredArgsConstructor
 public class ValidadorDocenteLibre extends ValidadorBase{
 
-    @Autowired
-    private IFranjaHorariaService franjaHorariaService;
+    private final GestionarFranjasGatewayPort gestionarFranjasGateway;
 
     @Override
-    protected boolean manejarValidacion(FranjaHorariaEntity franjaHoraria, SaveFranjaDTORespuesta respuesta) {
-        ArrayList<FranjaHorariaEntity> listaFranjas = franjaHorariaService.getAllFranjasHorarias();
+    protected boolean manejarValidacion(FranjaHoraria franjaHoraria) {
+        List<FranjaHoraria> listaFranjas = gestionarFranjasGateway.listarFranjas();
         if(listaFranjas.isEmpty()){
             return true;
         }
-        for (FranjaHorariaEntity existente : listaFranjas) {
+        for (FranjaHoraria existente : listaFranjas) {
             // Si es la misma franja ignorarla
-            if(franjaHoraria.getFranjaHorariaId().equals(existente.getFranjaHorariaId())){
+            if(franjaHoraria.getFranjaId().equals(existente.getFranjaId())){
                 continue;
             }
 
             if (existente.getDia().equals(franjaHoraria.getDia())) {
                 // Para cada docente dictando la materia hay que verificar si se solapa la franja
-                for (DocenteEntity docente : franjaHoraria.getDocentes()) {
+                for (Docente docente : franjaHoraria.getDocentes()) {
                     if (existente.getDocentes().contains(docente)) {
                         // Una franja se solapa con otra si NO se cumple ninguna de estas condiciones:
                         // 1) La nueva franja termina antes de que empiece la existente
@@ -41,8 +38,8 @@ public class ValidadorDocenteLibre extends ValidadorBase{
                         if (seSolapa) {
                             respuesta.setCodigoRespuesta("ERROR 104");
                             respuesta.setMensaje("No se debe permitir asignar una franja horaria a un docente que está dictando un curso en el día y hora" +
-                                    " de inicio y hora fin de la nueva franja." + franjaHoraria.getFranjaHorariaId() + " se solapa con " +
-                                    existente.getFranjaHorariaId() + ".");
+                                    " de inicio y hora fin de la nueva franja." + franjaHoraria.getFranjaId() + " se solapa con " +
+                                    existente.getFranjaId() + ".");
                             return false;
                         }
                     }

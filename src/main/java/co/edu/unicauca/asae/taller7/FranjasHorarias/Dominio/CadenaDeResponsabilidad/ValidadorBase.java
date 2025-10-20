@@ -1,7 +1,6 @@
 package co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CadenaDeResponsabilidad;
 
-import co.edu.unicauca.asae.Taller03.CapaAccesoADatos.Models.FranjaHorariaEntity;
-import co.edu.unicauca.asae.Taller03.FachadaServicios.DTO.SaveFranjaDTORespuesta;
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.FranjaHoraria;
 
 public abstract class ValidadorBase implements ValidadorFranja {
 
@@ -13,15 +12,13 @@ public abstract class ValidadorBase implements ValidadorFranja {
     }
 
     @Override
-    public boolean validar(FranjaHorariaEntity franjaHoraria, SaveFranjaDTORespuesta respuesta) {
-        if(manejarValidacion(franjaHoraria, respuesta)){
-            if(siguienteValidador!=null){
-                return siguienteValidador.validar(franjaHoraria, respuesta);
+    public void validar(FranjaHoraria franjaHoraria) {
+        if(manejarValidacion(franjaHoraria)){
+            if(siguienteValidador!=null) {
+                siguienteValidador.validar(franjaHoraria);
             }
-            return true;
         }
-        return false;
     }
 
-    protected abstract boolean manejarValidacion(FranjaHorariaEntity franjaHoraria, SaveFranjaDTORespuesta respuesta);
+    protected abstract boolean manejarValidacion(FranjaHoraria franjaHoraria);
 }

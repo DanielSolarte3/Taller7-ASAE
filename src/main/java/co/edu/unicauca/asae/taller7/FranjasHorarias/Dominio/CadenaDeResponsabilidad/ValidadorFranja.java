@@ -1,7 +1,9 @@
 package co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CadenaDeResponsabilidad;
 
 
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.FranjaHoraria;
+
 public interface ValidadorFranja {
     void setSiguiente(ValidadorFranja siguiente);
-    boolean validar(FranjaHoraria franjaHoraria, SaveFranjaDTORespuesta respuesta);
+    void validar(FranjaHoraria franjaHoraria);
 }

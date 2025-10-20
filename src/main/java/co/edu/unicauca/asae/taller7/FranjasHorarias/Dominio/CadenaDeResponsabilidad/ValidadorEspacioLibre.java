@@ -1,28 +1,24 @@
 package co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CadenaDeResponsabilidad;
 
-import co.edu.unicauca.asae.Taller03.CapaAccesoADatos.Models.FranjaHorariaEntity;
-import co.edu.unicauca.asae.Taller03.FachadaServicios.DTO.SaveFranjaDTORespuesta;
-import co.edu.unicauca.asae.Taller03.FachadaServicios.Services.Interfaces.IFranjaHorariaService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output.GestionarFranjasGatewayPort;
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.FranjaHoraria;
+import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
+import java.util.List;
 
-@Component
+@RequiredArgsConstructor
 public class ValidadorEspacioLibre extends ValidadorBase {
-
-    @Autowired
-    private IFranjaHorariaService franjaHorariaService;
+    private final GestionarFranjasGatewayPort franjasGateway;
 
     @Override
-    protected boolean manejarValidacion(FranjaHorariaEntity franjaHoraria, SaveFranjaDTORespuesta respuesta) {
-        ArrayList<FranjaHorariaEntity> listaFranjas = franjaHorariaService.getAllFranjasHorarias();
+    protected boolean manejarValidacion(FranjaHoraria franjaHoraria) {
+        List<FranjaHoraria> listaFranjas = franjasGateway.listarFranjas();
         if(listaFranjas.isEmpty()){
             return true;
         }
-        for (FranjaHorariaEntity existente : listaFranjas) {
+        for (FranjaHoraria existente : listaFranjas) {
             // Si es la misma franja ignorarla
-            if(franjaHoraria.getFranjaHorariaId().equals(existente.getFranjaHorariaId())){
+            if(franjaHoraria.getFranjaId().equals(existente.getFranjaId())){
                 continue;
             }
             // Si es el mismo espacio fisico y el mismo dia
@@ -38,7 +34,7 @@ public class ValidadorEspacioLibre extends ValidadorBase {
                 if (seSolapa) {
                     respuesta.setCodigoRespuesta("ERROR 103");
                     respuesta.setMensaje("No se permite asignar una franja horaria a un espacio físico que está ocupado en el día y hora de" +
-                            " inicio y hora fin de la nueva franja." + franjaHoraria.getFranjaHorariaId() + " se solapa con " + existente.getFranjaHorariaId() + ".");
+                            " inicio y hora fin de la nueva franja." + franjaHoraria.getFranjaId() + " se solapa con " + existente.getFranjaId() + ".");
                     return false;
                 }
             }
