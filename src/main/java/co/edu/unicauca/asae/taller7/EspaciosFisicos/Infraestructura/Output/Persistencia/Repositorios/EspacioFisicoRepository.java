@@ -14,12 +14,12 @@ import java.util.List;
 public interface EspacioFisicoRepository extends JpaRepository<EspacioFisicoEntity, Integer> {
     List<EspacioFisicoEntity> findByNombreStartingWithIgnoreCaseAndCapacidadGreaterThanEqualOrderByNombreAsc(String patron, Integer capacidad);
 
-    @Query("SELECT CASE WHEN COUNT(fh) > 0 THEN true ELSE false END " +
+    @Query("SELECT COUNT(fh) " +
             "FROM FranjaHorariaEntity fh " +
             "WHERE fh.espacioFisico.espacioFisicoId = :espacioFisicoId " +
             "AND fh.dia = :dia " +
             "AND ((fh.horaInicio < :horaFin AND fh.horaFin > :horaInicio))")
-    boolean isEspacioOcupado(@Param("espacioFisicoId") Integer espacioFisicoId, @Param("dia") String dia,
+    Integer isEspacioOcupado(@Param("espacioFisicoId") Integer espacioFisicoId, @Param("dia") String dia,
                              @Param("horaInicio") LocalTime horaInicio, @Param("horaFin") LocalTime horaFin);
 
     @Modifying
