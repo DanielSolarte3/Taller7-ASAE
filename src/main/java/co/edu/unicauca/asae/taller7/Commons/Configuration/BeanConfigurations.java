@@ -18,13 +18,16 @@ import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CasosDeUso.Gestionar
 public class BeanConfigurations {
 
     @Bean
-    public ValidadorHorarioPermitido ConfigChain(ValidadorHorarioPermitido validadorHorarioPermitido,
-            ValidadorEspacioActivo validadorEspacioActivo,
-            ValidadorEspacioLibre validadorEspacioLibre,
-            ValidadorDocenteLibre validadorDocenteLibre) {
+    public ValidadorHorarioPermitido ConfigChain(GestionarFranjasGatewayPort objGestionarFranjasGatewayPort) {
+        ValidadorHorarioPermitido validadorHorarioPermitido = new ValidadorHorarioPermitido();
+        ValidadorEspacioActivo validadorEspacioActivo = new ValidadorEspacioActivo();
+        ValidadorEspacioLibre validadorEspacioLibre = new ValidadorEspacioLibre(objGestionarFranjasGatewayPort);
+        ValidadorDocenteLibre validadorDocenteLibre = new ValidadorDocenteLibre(objGestionarFranjasGatewayPort);
+
         validadorHorarioPermitido.setSiguiente(validadorEspacioActivo);
         validadorEspacioActivo.setSiguiente(validadorEspacioLibre);
         validadorEspacioLibre.setSiguiente(validadorDocenteLibre);
+
         return validadorHorarioPermitido;
     }
 
@@ -38,14 +41,13 @@ public class BeanConfigurations {
 
     @Bean
     public GestionarCursosCU crearGestionarCursosCU(GestionarCursosGatewayPort objGestionarCursosGateway) {
-        GestionarCursosCU objGestionarCursosCU = new GestionarCursosCU(objGestionarCursosGateway);
-        return objGestionarCursosCU;
+        return new GestionarCursosCU(objGestionarCursosGateway);
     }
 
     @Bean
-    public GestionarFranjasCU crearGestionarFranjasCU(GestionarFranjasGatewayPort objGestionarFranjasGatewayPort) {
-        GestionarFranjasCU objGestionarFranjasCU = new GestionarFranjasCU(objGestionarFranjasGatewayPort);
-        return objGestionarFranjasCU;
+    public GestionarFranjasCU crearGestionarFranjasCU(GestionarFranjasGatewayPort objGestionarFranjasGatewayPort,
+                                                      ValidadorHorarioPermitido validadorHorarioPermitido) {
+        return new GestionarFranjasCU(objGestionarFranjasGatewayPort, validadorHorarioPermitido);
     }
 
 }
