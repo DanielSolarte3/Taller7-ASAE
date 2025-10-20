@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+import co.edu.unicauca.asae.taller7.Docentes.Dominio.Modelos.Docente;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
