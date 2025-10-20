@@ -20,11 +20,6 @@ public class GestionarEspaciosFisicosCU implements GestionarEspaciosFisicosCUPor
     }
     
     @Override
-    public List<EspacioFisico> buscarEspaciosFisicosPorNombreIn(String nombre) {
-        return gestionarEspaciosFisicosGatewayPort.buscarEspaciosFisicosPorNombreOut(nombre);
-    }
-    
-    @Override
     public List<EspacioFisico> buscarEspaciosFisicosPorPatronYCapacidadIn(String patron, Integer capacidadMinima) {
         return gestionarEspaciosFisicosGatewayPort.buscarEspaciosFisicosPorPatronYCapacidadOut(patron, capacidadMinima);
     }

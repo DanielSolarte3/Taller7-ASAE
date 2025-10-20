@@ -5,6 +5,5 @@ import java.util.List;
 
 public interface GestionarEspaciosFisicosCUPort {
     EspacioFisico guardarEspacioFisicoIn(EspacioFisico espacioFisico);
-    List<EspacioFisico> buscarEspaciosFisicosPorNombreIn(String nombre);
     List<EspacioFisico> buscarEspaciosFisicosPorPatronYCapacidadIn(String patron, Integer capacidadMinima);
 }

@@ -6,6 +6,5 @@ import co.edu.unicauca.asae.taller7.EspaciosFisicos.Dominio.Modelos.EspacioFisic
 
 public interface GestionarEspaciosFisicosGatewayPort {
     EspacioFisico guardarEspacioFisicoOut(EspacioFisico espacioFisico);
-    List<EspacioFisico> buscarEspaciosFisicosPorNombreOut(String nombre);
     List<EspacioFisico> buscarEspaciosFisicosPorPatronYCapacidadOut(String patron, Integer capacidadMinima);
 }
