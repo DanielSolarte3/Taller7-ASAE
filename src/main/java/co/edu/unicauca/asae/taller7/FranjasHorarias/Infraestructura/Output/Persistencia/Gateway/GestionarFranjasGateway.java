@@ -1,4 +1,4 @@
-package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Gateway;
+package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Persistencia.Gateway;
 
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output.GestionarFranjasGatewayPort;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.FranjaHoraria;
@@ -24,5 +24,10 @@ public class GestionarFranjasGateway implements GestionarFranjasGatewayPort {
     @Override
     public List<FranjaHoraria> listarFranjasPorCursoOut(Integer idCurso) {
         return franjasHorariasMapper.toModelList(franjaHorariaRepository.findFranjaHorariaByCurso_CursoId(idCurso));
+    }
+
+    @Override
+    public List<FranjaHoraria> listarFranjas() {
+        return franjasHorariasMapper.toModelList(franjaHorariaRepository.findAll());
     }
 }

@@ -1,10 +1,12 @@
 package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Persistencia.Entidades;
 
+import co.edu.unicauca.asae.taller7.Docentes.Infraestructura.Output.Persistencia.Entidades.DocenteEntity;
 import co.edu.unicauca.asae.taller7.EspaciosFisicos.Infraestructura.Output.Persistencia.Entidades.EspacioFisicoEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "franja_horaria")
@@ -28,5 +30,9 @@ public class FranjaHorariaEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "espacioFisicoId")
     private EspacioFisicoEntity espacioFisico;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "docenteId")
+    private List<DocenteEntity> docentes;
 
 }
