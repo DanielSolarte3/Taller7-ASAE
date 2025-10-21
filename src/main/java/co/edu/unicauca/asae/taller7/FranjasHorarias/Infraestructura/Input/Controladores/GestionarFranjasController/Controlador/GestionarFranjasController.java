@@ -1,13 +1,11 @@
 package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarFranjasController.Controlador;
 
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Input.GestionarFranjasCUPort;
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarFranjasController.DTOs.FranjaHorariaDTOPeticion;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarFranjasController.Mapper.FranjasHorariasDTOMapper;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarFranjasController.DTORespuesta.FranjaHorariaDTORespuesta;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +18,11 @@ public class GestionarFranjasController {
 
     @GetMapping("/listarPorCurso/{id}")
     public List<FranjaHorariaDTORespuesta> listarPorCurso(@PathVariable int id) {
-        return franjasHorariasDTOMapper.toDTOList(gestionarFranjasCUPort.listarFranjasPorCursoIn(id));
+        return franjasHorariasDTOMapper.toDTORespuestaList(gestionarFranjasCUPort.listarFranjasPorCursoIn(id));
+    }
+
+    @PostMapping()
+    public FranjaHorariaDTORespuesta guardarFranjaHoraria(@RequestBody FranjaHorariaDTOPeticion franjaHorariaDTO) {
+        return franjasHorariasDTOMapper.toDTORespuesta(gestionarFranjasCUPort.guardarFranjaIn(franjasHorariasDTOMapper.toModelFromPeticion(franjaHorariaDTO)));
     }
 }

@@ -1,5 +1,6 @@
 package co.edu.unicauca.asae.taller7.Commons.Configuration;
 
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output.FranjasFormateadorResultadosPort;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CadenaDeResponsabilidad.ValidadorExistenEntidades;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,15 +18,16 @@ import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CasosDeUso.Gestionar
 public class BeanConfigurations {
 
     @Bean
-    public ValidadorEspacioLibre ConfigChain() {
-        ValidadorEspacioLibre validadorEspacioLibre = new ValidadorEspacioLibre();
-        ValidadorDocenteLibre validadorDocenteLibre = new ValidadorDocenteLibre();
-        ValidadorExistenEntidades validadorExistenEntidades = new ValidadorExistenEntidades();
+    public ValidadorExistenEntidades ConfigChain(FranjasFormateadorResultadosPort franjasFormateadorResultados,
+                                                 GestionarFranjasGatewayPort gestionarFranjas) {
+        ValidadorEspacioLibre validadorEspacioLibre = new ValidadorEspacioLibre(franjasFormateadorResultados, gestionarFranjas);
+        ValidadorDocenteLibre validadorDocenteLibre = new ValidadorDocenteLibre(franjasFormateadorResultados, gestionarFranjas);
+        ValidadorExistenEntidades validadorExistenEntidades = new ValidadorExistenEntidades(franjasFormateadorResultados, gestionarFranjas);
 
+        validadorExistenEntidades.setSiguiente(validadorEspacioLibre);
         validadorEspacioLibre.setSiguiente(validadorDocenteLibre);
-        validadorDocenteLibre.setSiguiente(validadorExistenEntidades);
 
-        return validadorEspacioLibre;
+        return validadorExistenEntidades;
     }
 
     @Bean
@@ -41,8 +43,8 @@ public class BeanConfigurations {
 
     @Bean
     public GestionarFranjasCU crearGestionarFranjasCU(GestionarFranjasGatewayPort objGestionarFranjasGatewayPort,
-                                                      ValidadorEspacioLibre validadorEspacioLibre) {
-        return new GestionarFranjasCU(objGestionarFranjasGatewayPort, validadorEspacioLibre);
+                                                      ValidadorExistenEntidades validadorExistenEntidades) {
+        return new GestionarFranjasCU(objGestionarFranjasGatewayPort, validadorExistenEntidades);
     }
 
 }

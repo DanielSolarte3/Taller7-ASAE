@@ -1,8 +1,14 @@
 package co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CadenaDeResponsabilidad;
 
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output.FranjasFormateadorResultadosPort;
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output.GestionarFranjasGatewayPort;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.FranjaHoraria;
 
 public class ValidadorEspacioLibre extends ValidadorBase {
+
+    public ValidadorEspacioLibre(FranjasFormateadorResultadosPort franjasFormateadorResultados, GestionarFranjasGatewayPort franjasGateway) {
+        super(franjasFormateadorResultados, franjasGateway);
+    }
 
     @Override
     protected boolean manejarValidacion(FranjaHoraria franjaHoraria) {

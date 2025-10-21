@@ -15,7 +15,7 @@ public interface CursoRepository extends JpaRepository<CursoEntity, Integer> {
     List<CursoEntity> findCursoByAsignatura_Nombre(String nombre);
 
     @Query("SELECT c FROM CursoEntity c " +
-            "LEFT JOIN FETCH c.franjas fh " +
+            "LEFT JOIN FETCH c.franjasHorarias fh " +
             "LEFT JOIN FETCH fh.espacioFisico ef " +
             "WHERE c.cursoId = :cursoId")
     List<CursoEntity> findCursoCompletoConFranjasYEspacios(@Param("cursoId") Integer cursoId);

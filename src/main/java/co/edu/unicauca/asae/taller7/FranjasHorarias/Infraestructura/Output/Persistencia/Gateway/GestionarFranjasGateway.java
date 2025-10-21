@@ -1,9 +1,13 @@
 package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Persistencia.Gateway;
 
 import co.edu.unicauca.asae.taller7.Docentes.Infraestructura.Output.Persistencia.Repositorios.DocenteRepository;
+import co.edu.unicauca.asae.taller7.EspaciosFisicos.Dominio.Modelos.EspacioFisico;
+import co.edu.unicauca.asae.taller7.EspaciosFisicos.Infraestructura.Output.Persistencia.Mappers.EspacioFisicoMapper;
 import co.edu.unicauca.asae.taller7.EspaciosFisicos.Infraestructura.Output.Persistencia.Repositorios.EspacioFisicoRepository;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output.GestionarFranjasGatewayPort;
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.Curso;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.FranjaHoraria;
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Persistencia.Mappers.CursoMapper;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Persistencia.Mappers.FranjasHorariasMapper;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Persistencia.Repositorios.CursoRepository;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Persistencia.Repositorios.FranjaHorariaRepository;
@@ -22,6 +26,8 @@ public class GestionarFranjasGateway implements GestionarFranjasGatewayPort {
     private final EspacioFisicoRepository espacioFisicoRepository;
     private final DocenteRepository docenteRepository;
     private final CursoRepository cursoRepository;
+    private final EspacioFisicoMapper espacioFisicoMapper;
+    private final CursoMapper cursoMapper;
 
     @Override
     public FranjaHoraria guardarFranjaOut(FranjaHoraria franja) {
@@ -49,17 +55,19 @@ public class GestionarFranjasGateway implements GestionarFranjasGatewayPort {
     }
 
     @Override
-    public boolean espacioExiste(Integer idEspacio) {
-        return espacioFisicoRepository.findById(idEspacio).isPresent();
+    public EspacioFisico getEspacioFisicoById(Integer idEspacio) {
+        if(espacioFisicoRepository.findById(idEspacio).isPresent()){
+            return espacioFisicoMapper.toModel(espacioFisicoRepository.findById(idEspacio).get());
+        }
+        return null;
     }
 
     @Override
-    public boolean docenteExiste(Integer idDocente) {
-        return docenteRepository.findById(idDocente).isPresent();
+    public Curso getCursoById(Integer idCurso) {
+        if(cursoRepository.findById(idCurso).isPresent()){
+            return cursoMapper.toModel(cursoRepository.findById(idCurso).get());
+        }
+        return null;
     }
 
-    @Override
-    public boolean cursoExiste(Integer idCurso) {
-        return cursoRepository.findById(idCurso).isPresent();
-    }
 }

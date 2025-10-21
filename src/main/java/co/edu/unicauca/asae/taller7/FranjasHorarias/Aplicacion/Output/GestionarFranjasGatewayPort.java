@@ -1,5 +1,8 @@
 package co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output;
 
+import co.edu.unicauca.asae.taller7.Docentes.Dominio.Modelos.Docente;
+import co.edu.unicauca.asae.taller7.EspaciosFisicos.Dominio.Modelos.EspacioFisico;
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.Curso;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.FranjaHoraria;
 
 import java.time.LocalTime;
@@ -11,7 +14,7 @@ public interface GestionarFranjasGatewayPort {
     List<FranjaHoraria> listarFranjas();
     boolean espacioEstaOcupado(Integer idEspacio, String dia, LocalTime horaInicio, LocalTime horaFin);
     boolean docenteEstaOcupado(Integer idDocente, String dia, LocalTime horaInicio, LocalTime horaFin);
-    boolean espacioExiste(Integer idEspacio);
-    boolean docenteExiste(Integer idDocente);
-    boolean cursoExiste(Integer idCurso);
+    EspacioFisico getEspacioFisicoById(Integer idEspacio);
+    //Docente getDocenteById(Integer idDocente);
+    Curso getCursoById(Integer idCurso);
 }

@@ -3,17 +3,22 @@ package co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CadenaDeResponsabil
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output.FranjasFormateadorResultadosPort;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output.GestionarFranjasGatewayPort;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.FranjaHoraria;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class ValidadorBase implements ValidadorFranja {
 
     protected ValidadorFranja siguienteValidador;
 
-    @Autowired
     protected FranjasFormateadorResultadosPort franjasFormateadorResultados;
-
-    @Autowired
     protected GestionarFranjasGatewayPort franjasGateway;
+
+    protected ValidadorBase (FranjasFormateadorResultadosPort franjasFormateadorResultados,
+                   GestionarFranjasGatewayPort franjasGateway) {
+        this.franjasFormateadorResultados = franjasFormateadorResultados;
+        this.franjasGateway = franjasGateway;
+    }
+
 
     @Override
     public void setSiguiente(ValidadorFranja siguiente) {

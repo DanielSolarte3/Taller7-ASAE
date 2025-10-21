@@ -5,7 +5,7 @@ import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Contro
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface EspaciosFisicosMapper {
+public interface EspaciosFisicosDTOMapper {
     EspacioFisicoDTORespuesta toDTO(EspacioFisico espacioFisico);
     EspacioFisico toModel(EspacioFisicoDTORespuesta espacioFisicoDTO);
 }
