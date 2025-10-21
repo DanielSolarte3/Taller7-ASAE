@@ -1,5 +1,6 @@
 package co.edu.unicauca.asae.taller7.Commons.Configuration;
 
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CadenaDeResponsabilidad.ValidadorExistenEntidades;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,11 +17,13 @@ import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CasosDeUso.Gestionar
 public class BeanConfigurations {
 
     @Bean
-    public ValidadorEspacioLibre ConfigChain(GestionarFranjasGatewayPort objGestionarFranjasGatewayPort) {
-        ValidadorEspacioLibre validadorEspacioLibre = new ValidadorEspacioLibre(objGestionarFranjasGatewayPort);
-        ValidadorDocenteLibre validadorDocenteLibre = new ValidadorDocenteLibre(objGestionarFranjasGatewayPort);
+    public ValidadorEspacioLibre ConfigChain() {
+        ValidadorEspacioLibre validadorEspacioLibre = new ValidadorEspacioLibre();
+        ValidadorDocenteLibre validadorDocenteLibre = new ValidadorDocenteLibre();
+        ValidadorExistenEntidades validadorExistenEntidades = new ValidadorExistenEntidades();
 
         validadorEspacioLibre.setSiguiente(validadorDocenteLibre);
+        validadorDocenteLibre.setSiguiente(validadorExistenEntidades);
 
         return validadorEspacioLibre;
     }
@@ -28,8 +31,7 @@ public class BeanConfigurations {
     @Bean
     public GestionarEspaciosFisicosCU crearGestionarEspaciosFisicosCU(
             GestionarEspaciosFisicosGatewayPort objGestionarEspaciosFisicosGateway) {
-        return new GestionarEspaciosFisicosCU(
-                objGestionarEspaciosFisicosGateway);
+        return new GestionarEspaciosFisicosCU(objGestionarEspaciosFisicosGateway);
     }
 
     @Bean
