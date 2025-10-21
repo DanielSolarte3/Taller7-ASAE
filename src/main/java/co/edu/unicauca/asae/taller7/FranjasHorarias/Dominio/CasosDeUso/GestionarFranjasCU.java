@@ -2,7 +2,6 @@ package co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CasosDeUso;
 
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Input.GestionarFranjasCUPort;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output.GestionarFranjasGatewayPort;
-import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CadenaDeResponsabilidad.ValidadorEspacioLibre;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CadenaDeResponsabilidad.ValidadorExistenEntidades;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.FranjaHoraria;
 import lombok.RequiredArgsConstructor;
@@ -23,5 +22,10 @@ public class GestionarFranjasCU implements GestionarFranjasCUPort {
     @Override
     public List<FranjaHoraria> listarFranjasPorCursoIn(Integer cursoId) {
         return gestionarFranjasGatewayPort.listarFranjasPorCursoOut(cursoId);
+    }
+
+    @Override
+    public List<FranjaHoraria> listarFranjasPorDocenteIn(Integer docenteId) {
+        return gestionarFranjasGatewayPort.listarFranjaPorDocenteOut(docenteId);
     }
 }

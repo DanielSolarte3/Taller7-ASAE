@@ -1,8 +1,9 @@
 package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarFranjasController.DTORespuesta;
 
-import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.DTORespuesta.CursoDTORespuesta;
 import lombok.Data;
 import java.time.LocalTime;
+
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarCursosController.DTORespuesta.CursoDTORespuesta;
 
 @Data
 public class FranjaHorariaDTORespuesta {

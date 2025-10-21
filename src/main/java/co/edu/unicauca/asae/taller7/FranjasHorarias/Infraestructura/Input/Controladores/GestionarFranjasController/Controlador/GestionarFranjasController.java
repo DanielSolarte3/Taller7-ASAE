@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/franjasHorarias")
@@ -25,6 +26,12 @@ public class GestionarFranjasController {
         return new ResponseEntity<>(listaFranjas, HttpStatus.OK);
     }
 
+    @GetMapping("/listarPorDocente/{id}")
+    public ResponseEntity<List<FranjaHorariaDTORespuesta>> listarPorDocente(@PathVariable Integer id) {
+        List<FranjaHorariaDTORespuesta> listaFranjas = franjasHorariasDTOMapper.toDTORespuestaList(gestionarFranjasCUPort.listarFranjasPorDocenteIn(id));
+        return new ResponseEntity<>(listaFranjas, HttpStatus.OK);
+    }
+    
     @PostMapping()
     public ResponseEntity<FranjaHorariaDTORespuesta> guardarFranjaHoraria(
             @RequestBody FranjaHorariaDTOPeticion franjaHorariaDTO) {
