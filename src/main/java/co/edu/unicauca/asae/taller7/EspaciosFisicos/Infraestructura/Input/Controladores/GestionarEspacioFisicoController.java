@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.unicauca.asae.taller7.EspaciosFisicos.Aplicacion.Input.GestionarEspaciosFisicosCUPort;
 import co.edu.unicauca.asae.taller7.EspaciosFisicos.Infraestructura.Input.DTOMappers.EspacioFisicoDTOMapper;
-import co.edu.unicauca.asae.taller7.EspaciosFisicos.Infraestructura.Input.DTOs.EspacioFisicoDTORespuesta;
-import co.edu.unicauca.asae.taller7.EspaciosFisicos.Infraestructura.Input.DTOsPeticion.EspacioFisicoDTOPeticion;
+import co.edu.unicauca.asae.taller7.EspaciosFisicos.Infraestructura.Input.DTOPeticion.EspacioFisicoDTOPeticion;
+import co.edu.unicauca.asae.taller7.EspaciosFisicos.Infraestructura.Input.DTORespuesta.EspacioFisicoDTORespuesta;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

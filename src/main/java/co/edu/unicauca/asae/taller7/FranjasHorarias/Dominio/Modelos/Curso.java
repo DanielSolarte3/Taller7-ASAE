@@ -17,4 +17,5 @@ public class Curso {
     private Asignatura asignatura;
     private List<Docente> docentes;
     private List<FranjaHoraria> franjasHorarias;
+    private Integer capacidadMatricula;
 }

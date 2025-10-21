@@ -4,8 +4,8 @@ import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 
 import co.edu.unicauca.asae.taller7.EspaciosFisicos.Dominio.Modelos.EspacioFisico;
-import co.edu.unicauca.asae.taller7.EspaciosFisicos.Infraestructura.Input.DTOs.EspacioFisicoDTORespuesta;
-import co.edu.unicauca.asae.taller7.EspaciosFisicos.Infraestructura.Input.DTOsPeticion.EspacioFisicoDTOPeticion;
+import co.edu.unicauca.asae.taller7.EspaciosFisicos.Infraestructura.Input.DTOPeticion.EspacioFisicoDTOPeticion;
+import co.edu.unicauca.asae.taller7.EspaciosFisicos.Infraestructura.Input.DTORespuesta.EspacioFisicoDTORespuesta;
 
 import java.util.List;
 

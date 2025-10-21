@@ -31,4 +31,6 @@ public class CursoEntity {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "curso")
     private List<FranjaHorariaEntity> franjasHorarias = new ArrayList<>();
+
+    private Integer capacidadMatricula;
 }

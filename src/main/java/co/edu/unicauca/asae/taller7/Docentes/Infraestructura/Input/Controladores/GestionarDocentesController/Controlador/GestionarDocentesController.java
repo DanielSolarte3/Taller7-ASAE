@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import co.edu.unicauca.asae.taller7.Docentes.Aplicacion.Input.GestionarDocentesCUPort;
 import co.edu.unicauca.asae.taller7.Docentes.Dominio.Modelos.Docente;
 import co.edu.unicauca.asae.taller7.Docentes.Infraestructura.Input.Controladores.GestionarDocentesController.DTOMappers.DocenteDTOMapper;
+import co.edu.unicauca.asae.taller7.Docentes.Infraestructura.Input.Controladores.GestionarDocentesController.DTOPeticion.DocenteDTO;
 import co.edu.unicauca.asae.taller7.Docentes.Infraestructura.Input.Controladores.GestionarDocentesController.DTORespuesta.DocenteDTORespuesta;
-import co.edu.unicauca.asae.taller7.Docentes.Infraestructura.Input.Controladores.GestionarDocentesController.DTOs.DocenteDTO;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -31,6 +31,6 @@ public class GestionarDocentesController {
         return objRespuesta;
     }
 
-    
+
 
 }
