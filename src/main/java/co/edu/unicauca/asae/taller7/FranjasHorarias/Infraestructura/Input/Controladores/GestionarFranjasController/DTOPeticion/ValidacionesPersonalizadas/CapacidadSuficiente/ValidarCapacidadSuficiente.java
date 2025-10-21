@@ -1,4 +1,4 @@
-package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarFranjasController.DTOPeticion.ValidacionesPersonalizadas;
+package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarFranjasController.DTOPeticion.ValidacionesPersonalizadas.CapacidadSuficiente;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
