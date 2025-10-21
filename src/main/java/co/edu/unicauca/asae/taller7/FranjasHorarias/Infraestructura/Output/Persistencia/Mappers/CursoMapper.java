@@ -7,11 +7,15 @@ import org.mapstruct.Mapping;
 
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.Curso;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Persistencia.Entidades.CursoEntity;
+import org.mapstruct.Mappings;
 
 @Mapper (componentModel = "spring")
 public interface CursoMapper {
-    @Mapping(target = "franjasHorarias", ignore = true)
+
+    @Mappings({
+            @Mapping(target = "franjasHorarias", ignore = true) // CUIDAO: ESTO EVITA UN ERROR DE STACK OVERFLOW
+    })
     Curso toModel(CursoEntity entity);
 
-    List<Curso> toModel(List<CursoEntity> listCursos);
+    List<Curso> toModelList(List<CursoEntity> listCursos);
 }

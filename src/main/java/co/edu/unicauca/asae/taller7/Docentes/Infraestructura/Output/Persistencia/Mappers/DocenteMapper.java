@@ -8,9 +8,9 @@ import co.edu.unicauca.asae.taller7.Docentes.Infraestructura.Output.Persistencia
 
 @Mapper(componentModel = "spring", uses = {OficinaMapper.class})
 public interface DocenteMapper {
-    @Mapping(target = "cursos", ignore = true)
+    @Mapping(target = "cursos", ignore = true) // CUIDAO: ESTO EVITA UN ERROR DE STACK OVERFLOW
     DocenteEntity toEntity(Docente docente);
 
-    @Mapping(target = "cursos", ignore = true)
+    @Mapping(target = "cursos", ignore = true) // CUIDAO: ESTO EVITA UN ERROR DE STACK OVERFLOW
     Docente toModel(DocenteEntity docenteEntity);
 }
