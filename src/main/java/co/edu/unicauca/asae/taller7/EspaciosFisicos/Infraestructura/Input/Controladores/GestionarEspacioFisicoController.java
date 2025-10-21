@@ -1,6 +1,8 @@
 package co.edu.unicauca.asae.taller7.EspaciosFisicos.Infraestructura.Input.Controladores;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,12 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import co.edu.unicauca.asae.taller7.EspaciosFisicos.Aplicacion.Input.GestionarEspaciosFisicosCUPort;
 import co.edu.unicauca.asae.taller7.EspaciosFisicos.Infraestructura.Input.DTOMappers.EspacioFisicoDTOMapper;
 import co.edu.unicauca.asae.taller7.EspaciosFisicos.Infraestructura.Input.DTOs.EspacioFisicoDTORespuesta;
+import co.edu.unicauca.asae.taller7.EspaciosFisicos.Infraestructura.Input.DTOsPeticion.EspacioFisicoDTOPeticion;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/espaciosFisicos")
+@RequestMapping("/espaciosFisicos")
 @RequiredArgsConstructor
 public class GestionarEspacioFisicoController {
     private final EspacioFisicoDTOMapper espacioFisicoDTOMapper;
@@ -32,5 +35,18 @@ public class GestionarEspacioFisicoController {
         }
         return espacioFisicoDTOMapper.toDTOList(
                 gestionarEspaciosFisicosCUPort.buscarEspaciosFisicosPorPatronYCapacidadIn(patron, capacidadMinima));
+    }
+
+    @PostMapping()
+    public EspacioFisicoDTORespuesta crearEspacioFisico(@RequestBody EspacioFisicoDTOPeticion espacioFisicoDTOReq) {
+        if (espacioFisicoDTOReq.getNombre() == null || espacioFisicoDTOReq.getNombre().isBlank()) {
+            throw new IllegalArgumentException("El nombre no puede estar vacío");
+        }
+        if (espacioFisicoDTOReq.getCapacidad() == null || espacioFisicoDTOReq.getCapacidad() < 0) {
+            throw new IllegalArgumentException("La capacidad debe ser mayor o igual a 0");
+        }
+
+        return espacioFisicoDTOMapper.toDTO(gestionarEspaciosFisicosCUPort.guardarEspacioFisicoIn(
+                espacioFisicoDTOMapper.toModelFromPeticion(espacioFisicoDTOReq)));
     }
 }
