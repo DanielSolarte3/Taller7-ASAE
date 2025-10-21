@@ -6,50 +6,60 @@ import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Contr
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.ControladorExcepciones.ExcepcionesPropias.EntidadNoExisteException;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.ControladorExcepciones.ExcepcionesPropias.ReglaNegocioException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.Locale;
 
 @ControllerAdvice
 public class RestApiExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleGenericException(final HttpServletRequest req,
-                                                         final Exception exception,
-                                                         final Locale locale) {
-        final Error error = ErrorUtils.crearError(
-                CodigoError.ERROR_GENERICO.getCodigo(),
-                CodigoError.ERROR_GENERICO.getLlaveMensaje(),
-                HttpStatus.INTERNAL_SERVER_ERROR.value())
-        .setUrl(req.getRequestURL().toString());
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<Object> handleGenericException(final HttpServletRequest req,
+                        final Exception exception,
+                        final Locale locale) {
+                final Error error = ErrorUtils.crearError(
+                                CodigoError.ERROR_GENERICO.getCodigo(),
+                                CodigoError.ERROR_GENERICO.getLlaveMensaje(),
+                                HttpStatus.INTERNAL_SERVER_ERROR.value())
+                                .setUrl(req.getRequestURL().toString());
 
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+                return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-    @ExceptionHandler(ReglaNegocioException.class)
-    public ResponseEntity<Error> handleGenericException(final HttpServletRequest req,
-                                                        final ReglaNegocioException ex, final Locale locale) {
-        final Error error = ErrorUtils.crearError(
-                CodigoError.VIOLACION_REGLA_DE_NEGOCIO.getCodigo(),
-                ex.formatException(),
-                HttpStatus.BAD_REQUEST.value())
-        .setUrl(req.getRequestURL().toString()).setMetodo(req.getMethod());
+        @ExceptionHandler(ReglaNegocioException.class)
+        public ResponseEntity<Error> handleGenericException(final HttpServletRequest req,
+                        final ReglaNegocioException ex, final Locale locale) {
+                final Error error = ErrorUtils.crearError(
+                                CodigoError.VIOLACION_REGLA_DE_NEGOCIO.getCodigo(),
+                                ex.formatException(),
+                                HttpStatus.BAD_REQUEST.value())
+                                .setUrl(req.getRequestURL().toString()).setMetodo(req.getMethod());
 
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
+                return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
 
-    @ExceptionHandler(EntidadNoExisteException.class)
-    public ResponseEntity<Error> handleGenericException(final HttpServletRequest req,
-                                                        final EntidadNoExisteException ex, final Locale locale) {
-        final Error error = ErrorUtils.crearError(
-                CodigoError.ENTIDAD_NO_ENCONTRADA.getCodigo(),
-                String.format("%s, %s", CodigoError.ENTIDAD_NO_ENCONTRADA.getLlaveMensaje(), ex.getMessage()),
-                HttpStatus.NOT_FOUND.value())
-        .setUrl(req.getRequestURL().toString()).setMetodo(req.getMethod());
+        @ExceptionHandler(EntidadNoExisteException.class)
+        public ResponseEntity<Error> handleGenericException(final HttpServletRequest req,
+                        final EntidadNoExisteException ex, final Locale locale) {
+                final Error error = ErrorUtils.crearError(
+                                CodigoError.ENTIDAD_NO_ENCONTRADA.getCodigo(),
+                                String.format("%s, %s", CodigoError.ENTIDAD_NO_ENCONTRADA.getLlaveMensaje(),
+                                                ex.getMessage()),
+                                HttpStatus.NOT_FOUND.value())
+                                .setUrl(req.getRequestURL().toString()).setMetodo(req.getMethod());
 
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-    }
+                return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        }
+
+        @ResponseStatus(HttpStatus.BAD_REQUEST)
+        @ExceptionHandler(ConstraintViolationException.class)
+        public ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException e) {
+                return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
 }
