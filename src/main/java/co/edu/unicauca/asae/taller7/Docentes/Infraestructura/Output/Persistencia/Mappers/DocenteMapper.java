@@ -1,0 +1,16 @@
+package co.edu.unicauca.asae.taller7.Docentes.Infraestructura.Output.Persistencia.Mappers;
+
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import co.edu.unicauca.asae.taller7.Docentes.Dominio.Modelos.Docente;
+import co.edu.unicauca.asae.taller7.Docentes.Infraestructura.Output.Persistencia.Entidades.DocenteEntity;
+
+@Mapper(componentModel = "spring", uses = {OficinaMapper.class})
+public interface DocenteMapper {
+    @Mapping(target = "cursos", ignore = true)
+    DocenteEntity toEntity(Docente docente);
+
+    @Mapping(target = "cursos", ignore = true)
+    Docente toModel(DocenteEntity docenteEntity);
+}
