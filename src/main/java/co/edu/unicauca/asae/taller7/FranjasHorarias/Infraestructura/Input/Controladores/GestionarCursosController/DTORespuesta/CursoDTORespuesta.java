@@ -1,4 +1,4 @@
-package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.DTORespuesta;
+package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarCursosController.DTORespuesta;
 
 import java.util.List;
 

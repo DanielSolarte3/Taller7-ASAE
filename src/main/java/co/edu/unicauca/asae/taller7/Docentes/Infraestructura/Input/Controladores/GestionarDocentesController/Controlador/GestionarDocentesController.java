@@ -22,9 +22,10 @@ public class GestionarDocentesController {
     private final GestionarDocentesCUPort gestionarDocentesCUPort;
     private final DocenteDTOMapper docenteDTOMapper;
 
-    @PostMapping("/docentes")
+    @PostMapping
     public ResponseEntity<DocenteDTORespuesta> create(@RequestBody DocenteDTO docente) {
         Docente docenteACrear = docenteDTOMapper.toModelFromRequest(docente);
+        System.out.println(docenteACrear);
         Docente docenteCreado = gestionarDocentesCUPort.guardarDocenteIn(docenteACrear);
         ResponseEntity<DocenteDTORespuesta> objRespuesta = new ResponseEntity<DocenteDTORespuesta>(docenteDTOMapper.toResponseFromModel(docenteCreado), HttpStatus.CREATED);
 

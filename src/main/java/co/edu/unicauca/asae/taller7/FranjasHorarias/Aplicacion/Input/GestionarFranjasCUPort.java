@@ -7,4 +7,5 @@ import java.util.List;
 public interface GestionarFranjasCUPort {
     FranjaHoraria guardarFranjaIn(FranjaHoraria franjaHoraria);
     List<FranjaHoraria> listarFranjasPorCursoIn(Integer cursoId);
+    List<FranjaHoraria> listarFranjasPorDocenteIn(Integer docenteId);
 }

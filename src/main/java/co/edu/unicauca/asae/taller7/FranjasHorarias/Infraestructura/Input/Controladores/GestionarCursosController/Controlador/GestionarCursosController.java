@@ -1,11 +1,11 @@
-package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores;
+package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarCursosController.Controlador;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Input.GestionarCursosCUPort;
-import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.DTOMappers.CursosDTOMapper;
-import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.DTORespuesta.CursoDTORespuesta;
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarCursosController.DTORespuesta.CursoDTORespuesta;
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarCursosController.Mapper.CursosDTOMapper;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
