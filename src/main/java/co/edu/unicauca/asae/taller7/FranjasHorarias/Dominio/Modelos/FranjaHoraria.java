@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,5 +18,4 @@ public class FranjaHoraria {
     private LocalTime horaFin;
     private Curso curso;
     private EspacioFisico espacioFisico;
-    private List<Docente> docentes;
 }

@@ -5,6 +5,7 @@ import co.edu.unicauca.asae.taller7.EspaciosFisicos.Infraestructura.Output.Persi
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output.GestionarFranjasGatewayPort;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.FranjaHoraria;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Persistencia.Mappers.FranjasHorariasMapper;
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Persistencia.Repositorios.CursoRepository;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Persistencia.Repositorios.FranjaHorariaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class GestionarFranjasGateway implements GestionarFranjasGatewayPort {
     private final FranjasHorariasMapper franjasHorariasMapper;
     private final EspacioFisicoRepository espacioFisicoRepository;
     private final DocenteRepository docenteRepository;
+    private final CursoRepository cursoRepository;
 
     @Override
     public FranjaHoraria guardarFranjaOut(FranjaHoraria franja) {
@@ -44,5 +46,20 @@ public class GestionarFranjasGateway implements GestionarFranjasGatewayPort {
     @Override
     public boolean docenteEstaOcupado(Integer idDocente, String dia, LocalTime horaInicio, LocalTime horaFin) {
         return docenteRepository.isDocenteOcupado(idDocente, dia, horaInicio, horaFin) > 0;
+    }
+
+    @Override
+    public boolean espacioExiste(Integer idEspacio) {
+        return espacioFisicoRepository.findById(idEspacio).isPresent();
+    }
+
+    @Override
+    public boolean docenteExiste(Integer idDocente) {
+        return docenteRepository.findById(idDocente).isPresent();
+    }
+
+    @Override
+    public boolean cursoExiste(Integer idCurso) {
+        return cursoRepository.findById(idCurso).isPresent();
     }
 }

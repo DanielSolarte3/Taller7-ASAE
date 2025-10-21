@@ -1,8 +1,8 @@
-package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores;
+package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarFranjasController.Controlador;
 
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Input.GestionarFranjasCUPort;
-import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.DTOMappers.FranjasHorariasDTOMapper;
-import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.DTOs.FranjaHorariaDTORespuesta;
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarFranjasController.Mapper.FranjasHorariasDTOMapper;
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarFranjasController.DTORespuesta.FranjaHorariaDTORespuesta;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -20,7 +20,7 @@ public class EspacioFisicoEntity {
     private Integer capacidad;
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "espacioFisico")
-    private List<FranjaHorariaEntity> franjaHoraria;
+    private List<FranjaHorariaEntity> franjasHorarias;
 
     private Boolean estado;
 }

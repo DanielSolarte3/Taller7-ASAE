@@ -31,8 +31,4 @@ public class FranjaHorariaEntity {
     @JoinColumn(name = "espacioFisicoId")
     private EspacioFisicoEntity espacioFisico;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "docenteId")
-    private List<DocenteEntity> docentes;
-
 }

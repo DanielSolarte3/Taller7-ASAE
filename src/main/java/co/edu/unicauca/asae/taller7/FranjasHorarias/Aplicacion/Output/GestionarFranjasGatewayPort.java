@@ -11,4 +11,7 @@ public interface GestionarFranjasGatewayPort {
     List<FranjaHoraria> listarFranjas();
     boolean espacioEstaOcupado(Integer idEspacio, String dia, LocalTime horaInicio, LocalTime horaFin);
     boolean docenteEstaOcupado(Integer idDocente, String dia, LocalTime horaInicio, LocalTime horaFin);
+    boolean espacioExiste(Integer idEspacio);
+    boolean docenteExiste(Integer idDocente);
+    boolean cursoExiste(Integer idCurso);
 }
