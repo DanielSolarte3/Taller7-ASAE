@@ -21,7 +21,7 @@ public class GestionarCursoGatewayImplAdapter implements GestionarCursosGatewayP
     @Override
     public List<Curso> buscarCursosPorNombreAsignaturaOut(String nombreAsignatura) {
         List<CursoEntity> lista = this.cursoRepository.findCursoByAsignatura_Nombre(nombreAsignatura);
-        return cursosEntityMapper.toModel(lista);
+        return cursosEntityMapper.toModelList(lista);
     }
     
 }
