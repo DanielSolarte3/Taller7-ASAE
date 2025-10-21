@@ -1,5 +1,7 @@
 package co.edu.unicauca.asae.taller7.Commons.Configuration;
 
+import co.edu.unicauca.asae.taller7.Docentes.Aplicacion.Output.GestionarDocentesGatewayPort;
+import co.edu.unicauca.asae.taller7.Docentes.Dominio.CasosDeUso.GestionarDocentesCU;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output.FranjasFormateadorResultadosPort;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CadenaDeResponsabilidad.ValidadorExistenEntidades;
 import org.springframework.context.annotation.Bean;
@@ -47,4 +49,8 @@ public class BeanConfigurations {
         return new GestionarFranjasCU(objGestionarFranjasGatewayPort, validadorExistenEntidades);
     }
 
+    @Bean
+    public GestionarDocentesCU crearGestionarDocentesCU(GestionarDocentesGatewayPort objGestionarDocentesGateway) {
+        return new GestionarDocentesCU(objGestionarDocentesGateway);
+    }
 }
