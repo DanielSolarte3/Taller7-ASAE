@@ -1,10 +1,5 @@
-package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.ControladorExcepciones;
+package co.edu.unicauca.asae.taller7.Commons.Infraestructura.Output.ControladorExcepciones;
 
-import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.ControladorExcepciones.EstructuraExcepciones.CodigoError;
-import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.ControladorExcepciones.EstructuraExcepciones.Error;
-import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.ControladorExcepciones.EstructuraExcepciones.ErrorUtils;
-import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.ControladorExcepciones.ExcepcionesPropias.EntidadNoExisteException;
-import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.ControladorExcepciones.ExcepcionesPropias.ReglaNegocioException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 
@@ -13,6 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import co.edu.unicauca.asae.taller7.Commons.Infraestructura.Output.ControladorExcepciones.EstructuraExcepciones.CodigoError;
+import co.edu.unicauca.asae.taller7.Commons.Infraestructura.Output.ControladorExcepciones.EstructuraExcepciones.Error;
+import co.edu.unicauca.asae.taller7.Commons.Infraestructura.Output.ControladorExcepciones.EstructuraExcepciones.ErrorUtils;
+import co.edu.unicauca.asae.taller7.Commons.Infraestructura.Output.ControladorExcepciones.ExcepcionesPropias.EntidadNoExisteException;
+import co.edu.unicauca.asae.taller7.Commons.Infraestructura.Output.ControladorExcepciones.ExcepcionesPropias.ReglaNegocioException;
 
 import java.util.Locale;
 

@@ -27,6 +27,8 @@ public class GestionarDocentesGateway implements GestionarDocentesGatewayPort {
         return result > 0;
     }
 
-    
-    
+    @Override
+    public boolean existeCorreoDocente(String correo) {
+        return docenteRepository.existsByCorreo(correo);
+    }
 }

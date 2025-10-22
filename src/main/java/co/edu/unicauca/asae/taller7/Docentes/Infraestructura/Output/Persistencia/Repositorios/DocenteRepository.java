@@ -24,4 +24,5 @@ public interface DocenteRepository extends JpaRepository<DocenteEntity, Integer>
                         @Param("horaInicio") LocalTime horaInicio,
                         @Param("horaFin") LocalTime horaFin);
 
+        boolean existsByCorreo(String correo);
 }

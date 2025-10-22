@@ -1,6 +1,6 @@
-package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.ControladorExcepciones.ExcepcionesPropias;
+package co.edu.unicauca.asae.taller7.Commons.Infraestructura.Output.ControladorExcepciones.ExcepcionesPropias;
 
-import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.ControladorExcepciones.EstructuraExcepciones.CodigoError;
+import co.edu.unicauca.asae.taller7.Commons.Infraestructura.Output.ControladorExcepciones.EstructuraExcepciones.CodigoError;
 import lombok.Getter;
 
 @Getter

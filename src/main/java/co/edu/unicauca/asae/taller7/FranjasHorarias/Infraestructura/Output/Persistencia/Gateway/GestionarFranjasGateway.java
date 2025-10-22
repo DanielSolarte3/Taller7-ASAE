@@ -41,7 +41,7 @@ public class GestionarFranjasGateway implements GestionarFranjasGatewayPort {
 
     @Override
     public List<FranjaHoraria> listarFranjaPorDocenteOut(Integer idDocente) {
-        return franjasHorariasMapper.toModelList(franjaHorariaRepository.findFranjaHorariaByCurso_Docente_DocenteId(idDocente));
+        return franjasHorariasMapper.toModelList(franjaHorariaRepository.findFranjaHorariaByCurso_Docentes_DocenteId(idDocente));
     }
 
     @Override

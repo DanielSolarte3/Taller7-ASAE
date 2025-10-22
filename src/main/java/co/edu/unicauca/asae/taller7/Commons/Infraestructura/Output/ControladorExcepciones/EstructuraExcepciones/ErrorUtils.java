@@ -1,4 +1,4 @@
-package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.ControladorExcepciones.EstructuraExcepciones;
+package co.edu.unicauca.asae.taller7.Commons.Infraestructura.Output.ControladorExcepciones.EstructuraExcepciones;
 
 public final class ErrorUtils {
 

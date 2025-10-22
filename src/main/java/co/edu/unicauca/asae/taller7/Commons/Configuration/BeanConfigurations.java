@@ -1,8 +1,9 @@
 package co.edu.unicauca.asae.taller7.Commons.Configuration;
 
+import co.edu.unicauca.asae.taller7.Commons.Aplicacion.Output.FormateadorResultadosPort;
 import co.edu.unicauca.asae.taller7.Docentes.Aplicacion.Output.GestionarDocentesGatewayPort;
+import co.edu.unicauca.asae.taller7.Docentes.Dominio.CadenaDeResponsabilidad.ValidadorCorreoDocente;
 import co.edu.unicauca.asae.taller7.Docentes.Dominio.CasosDeUso.GestionarDocentesCU;
-import co.edu.unicauca.asae.taller7.FranjasHorarias.Aplicacion.Output.FranjasFormateadorResultadosPort;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CadenaDeResponsabilidad.ValidadorExistenEntidades;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,16 +21,21 @@ import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.CasosDeUso.Gestionar
 public class BeanConfigurations {
 
     @Bean
-    public ValidadorExistenEntidades ConfigChain(FranjasFormateadorResultadosPort franjasFormateadorResultados,
+    public ValidadorExistenEntidades FranjasHorariasConfigChain(FormateadorResultadosPort formateadorResultados,
                                                  GestionarFranjasGatewayPort gestionarFranjas) {
-        ValidadorEspacioLibre validadorEspacioLibre = new ValidadorEspacioLibre(franjasFormateadorResultados, gestionarFranjas);
-        ValidadorDocenteLibre validadorDocenteLibre = new ValidadorDocenteLibre(franjasFormateadorResultados, gestionarFranjas);
-        ValidadorExistenEntidades validadorExistenEntidades = new ValidadorExistenEntidades(franjasFormateadorResultados, gestionarFranjas);
+        ValidadorEspacioLibre validadorEspacioLibre = new ValidadorEspacioLibre(formateadorResultados, gestionarFranjas);
+        ValidadorDocenteLibre validadorDocenteLibre = new ValidadorDocenteLibre(formateadorResultados, gestionarFranjas);
+        ValidadorExistenEntidades validadorExistenEntidades = new ValidadorExistenEntidades(formateadorResultados, gestionarFranjas);
 
         validadorExistenEntidades.setSiguiente(validadorEspacioLibre);
         validadorEspacioLibre.setSiguiente(validadorDocenteLibre);
 
         return validadorExistenEntidades;
+    }
+
+    @Bean
+    public ValidadorCorreoDocente DocentesConfigChain(FormateadorResultadosPort formateadorResultados, GestionarDocentesGatewayPort gestionarDocentes) {
+        return new ValidadorCorreoDocente(formateadorResultados, gestionarDocentes);
     }
 
     @Bean
@@ -50,7 +56,7 @@ public class BeanConfigurations {
     }
 
     @Bean
-    public GestionarDocentesCU crearGestionarDocentesCU(GestionarDocentesGatewayPort objGestionarDocentesGateway) {
-        return new GestionarDocentesCU(objGestionarDocentesGateway);
+    public GestionarDocentesCU crearGestionarDocentesCU(GestionarDocentesGatewayPort objGestionarDocentesGateway, ValidadorCorreoDocente validadorCorreoDocente) {
+        return new GestionarDocentesCU(objGestionarDocentesGateway, validadorCorreoDocente);
     }
 }
