@@ -7,14 +7,17 @@ import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Contro
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
+import jakarta.validation.constraints.Min;
 
 @RestController
 @RequestMapping("/franjasHorarias")
 @RequiredArgsConstructor
+@Validated
 public class GestionarFranjasController {
     private final GestionarFranjasCUPort gestionarFranjasCUPort;
     private final FranjasHorariasDTOMapper franjasHorariasDTOMapper;
@@ -27,11 +30,12 @@ public class GestionarFranjasController {
     }
 
     @GetMapping("/listarPorDocente/{id}")
-    public ResponseEntity<List<FranjaHorariaDTORespuesta>> listarPorDocente(@PathVariable Integer id) {
+    public ResponseEntity<List<FranjaHorariaDTORespuesta>> listarPorDocente(
+            @PathVariable @Min(value = 1, message = "El id debe ser mayor a 0") Integer id) {
         List<FranjaHorariaDTORespuesta> listaFranjas = franjasHorariasDTOMapper.toDTORespuestaList(gestionarFranjasCUPort.listarFranjasPorDocenteIn(id));
         return new ResponseEntity<>(listaFranjas, HttpStatus.OK);
     }
-    
+
     @PostMapping()
     public ResponseEntity<FranjaHorariaDTORespuesta> guardarFranjaHoraria(
             @RequestBody FranjaHorariaDTOPeticion franjaHorariaDTO) {
