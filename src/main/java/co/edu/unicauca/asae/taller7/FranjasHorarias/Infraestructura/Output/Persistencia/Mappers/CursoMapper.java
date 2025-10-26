@@ -8,8 +8,9 @@ import org.mapstruct.Mapping;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.Curso;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Persistencia.Entidades.CursoEntity;
 import org.mapstruct.Mappings;
+import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {DocenteMapperFH.class})
 public interface CursoMapper {
 
     @Mappings({

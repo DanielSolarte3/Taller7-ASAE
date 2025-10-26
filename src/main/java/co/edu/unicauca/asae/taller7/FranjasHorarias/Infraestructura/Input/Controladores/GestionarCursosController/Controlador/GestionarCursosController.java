@@ -1,5 +1,6 @@
 package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarCursosController.Controlador;
 
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.Curso;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,9 +25,7 @@ public class GestionarCursosController {
 
     @GetMapping("/cursosPorNombreAsignatura/{nombreAsignatura}")
     public ResponseEntity<List<CursoDTORespuesta>> listarPorNombreDeAsignatura(@PathVariable String nombreAsignatura) {
-        ResponseEntity<List<CursoDTORespuesta>> respuesta = new ResponseEntity<List<CursoDTORespuesta>>(cursosDTOMapper.toDTOList(this.gestionarCursosCUPort.buscarCursosPorNombreAsignaturaIn(nombreAsignatura)),HttpStatus.OK);
-
-        return respuesta;
+        return new ResponseEntity<List<CursoDTORespuesta>>(cursosDTOMapper.toDTOList(this.gestionarCursosCUPort.buscarCursosPorNombreAsignaturaIn(nombreAsignatura)),HttpStatus.OK);
     }
     
 }

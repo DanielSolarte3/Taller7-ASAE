@@ -4,7 +4,7 @@ import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.Curso;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarFranjasController.DTORespuesta.CursoDTORespuesta;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", uses = {DocenteDTOMapperFH.class})
+@Mapper(componentModel = "spring")
 public interface CursoDTOMapper {
     CursoDTORespuesta toDTO(Curso curso);
     Curso toModel(CursoDTORespuesta dto);

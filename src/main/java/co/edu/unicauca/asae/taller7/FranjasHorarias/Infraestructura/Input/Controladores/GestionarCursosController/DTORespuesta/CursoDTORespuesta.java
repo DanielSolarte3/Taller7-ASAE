@@ -12,5 +12,4 @@ public class CursoDTORespuesta {
     private Integer cursoId;
     private String nombre;
     private Asignatura asignatura;
-    private List<DocenteDTORespuesta> docentes;
 }
