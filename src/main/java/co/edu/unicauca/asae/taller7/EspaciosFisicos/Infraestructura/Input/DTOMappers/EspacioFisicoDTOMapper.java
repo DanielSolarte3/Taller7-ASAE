@@ -12,17 +12,13 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface EspacioFisicoDTOMapper {
 
-    @BeanMapping(ignoreByDefault = true)
     EspacioFisico toModel(EspacioFisicoDTORespuesta espacioFisicoDTO);
 
-    @BeanMapping(ignoreByDefault = true)
     EspacioFisicoDTORespuesta toDTO(EspacioFisico espacioFisico);
 
     List<EspacioFisico> toModelList(List<EspacioFisicoDTORespuesta> espacioFisicoDTOList);
 
-    @BeanMapping(ignoreByDefault = true)
     List<EspacioFisicoDTORespuesta> toDTOList(List<EspacioFisico> espacioFisicoList);
 
-    @BeanMapping(ignoreByDefault = true)
     EspacioFisico toModelFromPeticion(EspacioFisicoDTOPeticion espacioFisicoDTOPeticion);
 }

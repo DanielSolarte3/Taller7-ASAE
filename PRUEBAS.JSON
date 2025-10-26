@@ -1,0 +1,1412 @@
+{
+  "info": {
+    "name": "Taller 7 - ASAE Complete Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Keyword Services Tests",
+      "item": [
+        {
+          "name": "Keyword 1 - Buscar Espacios por Nombre y Capacidad",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response is an array', function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test('Espacios contienen el patrón y capacidad correcta', function () {",
+                  "    const espacios = pm.response.json();",
+                  "    if(espacios.length > 0) {",
+                  "        espacios.forEach(espacio => {",
+                  "            pm.expect(espacio.nombre.toLowerCase()).to.include('aula');",
+                  "            pm.expect(espacio.capacidad).to.be.at.least(30);",
+                  "        });",
+                  "    }",
+                  "});",
+                  "",
+                  "pm.test('Espacios ordenados alfabéticamente por nombre', function () {",
+                  "    const espacios = pm.response.json();",
+                  "    for(let i = 0; i < espacios.length - 1; i++) {",
+                  "        pm.expect(espacios[i].nombre <= espacios[i+1].nombre).to.be.true;",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/espaciosFisicos/listarPorPatronYCapacidadMinima?patron=Aula&capacidadMinima=30",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["espaciosFisicos", "listarPorPatronYCapacidadMinima"],
+              "query": [
+                { "key": "patron", "value": "Aula" },
+                { "key": "capacidadMinima", "value": "30" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Keyword 2 - Obtener Cursos por Nombre de Asignatura",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response is an array', function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test('Todos los cursos pertenecen a la asignatura correcta', function () {",
+                  "    const cursos = pm.response.json();",
+                  "    if(cursos.length > 0) {",
+                  "        cursos.forEach(curso => {",
+                  "            pm.expect(curso.asignatura.nombre).to.equal('Arquitectura de Software');",
+                  "        });",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/curso/cursosPorNombreAsignatura/Arquitectura de Software",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": [
+                "curso",
+                "cursosPorNombreAsignatura",
+                "Arquitectura de Software"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Keyword 3 - Obtener Franjas por Curso",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response is an array', function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test('Todas las franjas pertenecen al curso ID 1', function () {",
+                  "    const franjas = pm.response.json();",
+                  "    if(franjas.length > 0) {",
+                  "        franjas.forEach(franja => {",
+                  "            pm.expect(franja.curso.cursoId).to.equal(1);",
+                  "        });",
+                  "    }",
+                  "});",
+                  "",
+                  "pm.test('Franjas contienen información del espacio físico', function () {",
+                  "    const franjas = pm.response.json();",
+                  "    if(franjas.length > 0) {",
+                  "        pm.expect(franjas[0]).to.have.property('espacioFisico');",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias/listarPorCurso/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias", "listarPorCurso", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Reglas de Negocio Tests",
+      "item": [
+        {
+          "name": "Regla 1 - Docente NO puede tener dos franjas simultáneas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400 - Docente ocupado', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Mensaje indica conflicto con docente', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.mensaje.toLowerCase()).to.include('docente');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"LUNES\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 1},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 2}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "Regla 2 - Espacio Físico NO puede estar ocupado",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400 - Espacio ocupado', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Mensaje indica conflicto con espacio físico', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.mensaje.toLowerCase()).to.include('espacio');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"LUNES\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 2},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 1}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "Regla 3 - Capacidad del espacio debe ser suficiente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400 - Capacidad insuficiente', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Mensaje indica problema de capacidad', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.mensaje.toLowerCase()).to.include('capacidad');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"MIERCOLES\",\n  \"horaInicio\": \"14:00\",\n  \"horaFin\": \"16:00\",\n  \"objCurso\": {\"cursoId\": 1},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 4}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "Regla 4 - Entidades deben existir",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 404 o 400 - Entidad no encontrada', function () {",
+                  "    pm.expect([404, 400]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "pm.test('Mensaje indica que entidad no existe', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.mensaje.toLowerCase()).to.match(/no existe|not found/);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"JUEVES\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 999},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 999}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "Regla 5 - Horario debe estar en rango permitido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400 - Horario no permitido', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Mensaje indica problema de horario', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.mensaje.toLowerCase()).to.include('horario');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"VIERNES\",\n  \"horaInicio\": \"22:00\",\n  \"horaFin\": \"23:00\",\n  \"objCurso\": {\"cursoId\": 1},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 5}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Validaciones Automáticas - Con Errores",
+      "item": [
+        {
+          "name": "Validación DTO - Día Nulo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Errores contienen campo dia', function () {",
+                  "    const response = pm.response.json();",
+                  "    const erroresStr = JSON.stringify(response);",
+                  "    pm.expect(erroresStr.toLowerCase()).to.include('dia');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": null,\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 1},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 1}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "Validación DTO - Hora Inicio Nula",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Errores contienen campo horaInicio', function () {",
+                  "    const response = pm.response.json();",
+                  "    const erroresStr = JSON.stringify(response);",
+                  "    pm.expect(erroresStr.toLowerCase()).to.include('hora');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"LUNES\",\n  \"horaInicio\": null,\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 1},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 1}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "Validación DTO - Hora Fin Nula",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Errores contienen campo horaFin', function () {",
+                  "    const response = pm.response.json();",
+                  "    const erroresStr = JSON.stringify(response);",
+                  "    pm.expect(erroresStr.toLowerCase()).to.include('hora');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"LUNES\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": null,\n  \"objCurso\": {\"cursoId\": 1},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 1}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "Validación DTO - Curso Nulo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Errores contienen campo curso', function () {",
+                  "    const response = pm.response.json();",
+                  "    const erroresStr = JSON.stringify(response);",
+                  "    pm.expect(erroresStr.toLowerCase()).to.include('curso');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"LUNES\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": null,\n  \"objEspacioFisico\": {\"espacioFisicoId\": 1}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "Validación DTO - Múltiples Errores",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Múltiples campos con error', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.mensaje).to.exist;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": null,\n  \"horaInicio\": null,\n  \"horaFin\": null,\n  \"objCurso\": null,\n  \"objEspacioFisico\": null\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Validaciones Automáticas - Sin Errores",
+      "item": [
+        {
+          "name": "DTO Válido - Crear Franja Correcta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('Franja creada contiene todos los campos', function () {",
+                  "    const franja = pm.response.json();",
+                  "    pm.expect(franja).to.have.property('franjaId');",
+                  "    pm.expect(franja).to.have.property('dia');",
+                  "    pm.expect(franja).to.have.property('horaInicio');",
+                  "    pm.expect(franja).to.have.property('horaFin');",
+                  "});",
+                  "",
+                  "pm.test('Datos coinciden con lo enviado', function () {",
+                  "    const franja = pm.response.json();",
+                  "    pm.expect(franja.dia).to.equal('SABADO');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"SABADO\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 5},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 7}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "DTO Válido - Todos los campos completos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('No hay errores en la respuesta', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('franjaId');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"DOMINGO\",\n  \"horaInicio\": \"10:00\",\n  \"horaFin\": \"12:00\",\n  \"objCurso\": {\"cursoId\": 6},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 8}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "DTO Válido - Formato horario correcto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('Horarios guardados correctamente', function () {",
+                  "    const franja = pm.response.json();",
+                  "    pm.expect(franja.horaInicio).to.exist;",
+                  "    pm.expect(franja.horaFin).to.exist;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"LUNES\",\n  \"horaInicio\": \"14:30\",\n  \"horaFin\": \"16:30\",\n  \"objCurso\": {\"cursoId\": 5},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 6}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "DTO Válido - IDs existentes",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('Entidades relacionadas existen', function () {",
+                  "    const franja = pm.response.json();",
+                  "    pm.expect(franja.curso).to.exist;",
+                  "    pm.expect(franja.espacioFisico).to.exist;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"MARTES\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"09:00\",\n  \"objCurso\": {\"cursoId\": 1},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 5}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "DTO Válido - Listar por Curso",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Respuesta contiene array de franjas', function () {",
+                  "    const franjas = pm.response.json();",
+                  "    pm.expect(franjas).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test('Franjas tienen estructura correcta', function () {",
+                  "    const franjas = pm.response.json();",
+                  "    if(franjas.length > 0) {",
+                  "        pm.expect(franjas[0]).to.have.property('franjaId');",
+                  "        pm.expect(franjas[0]).to.have.property('dia');",
+                  "        pm.expect(franjas[0]).to.have.property('horaInicio');",
+                  "        pm.expect(franjas[0]).to.have.property('horaFin');",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias/listarPorCurso/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias", "listarPorCurso", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Validaciones Personalizadas",
+      "item": [
+        {
+          "name": "Validación Personalizada - Capacidad Insuficiente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Mensaje indica capacidad insuficiente', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.mensaje.toLowerCase()).to.include('capacidad');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"LUNES\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 1},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 4}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "Validación Personalizada - Capacidad Suficiente OK",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('Franja creada exitosamente', function () {",
+                  "    const franja = pm.response.json();",
+                  "    pm.expect(franja).to.have.property('franjaId');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"MIERCOLES\",\n  \"horaInicio\": \"16:00\",\n  \"horaFin\": \"18:00\",\n  \"objCurso\": {\"cursoId\": 5},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 7}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "Validación Personalizada - Horario Militar Inválido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Error de formato de hora', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.mensaje).to.exist;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"JUEVES\",\n  \"horaInicio\": \"25:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 1},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 1}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "Validación Personalizada - Horario Militar Válido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('Horario militar válido aceptado', function () {",
+                  "    const franja = pm.response.json();",
+                  "    pm.expect(franja.horaInicio).to.exist;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"VIERNES\",\n  \"horaInicio\": \"14:30\",\n  \"horaFin\": \"16:30\",\n  \"objCurso\": {\"cursoId\": 6},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 8}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "Validación Personalizada - @Min en ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Mensaje de validación @Min', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.mensaje).to.include('mayor a 0');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias/listarPorDocente/0",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias", "listarPorDocente", "0"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Internacionalización",
+      "item": [
+        {
+          "name": "i18n - Mensajes en Español",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Mensajes en español', function () {",
+                  "    const response = pm.response.json();",
+                  "    const mensajes = JSON.stringify(response);",
+                  "    pm.expect(mensajes.toLowerCase()).to.match(/no puede|requerido|obligatorio/);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept-Language", "value": "es" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": null,\n  \"horaInicio\": null,\n  \"horaFin\": null,\n  \"objCurso\": null,\n  \"objEspacioFisico\": null\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "i18n - Mensajes en Inglés",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Mensajes en inglés', function () {",
+                  "    const response = pm.response.json();",
+                  "    const mensajes = JSON.stringify(response);",
+                  "    pm.expect(mensajes.toLowerCase()).to.match(/cannot|required|must/);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept-Language", "value": "en" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": null,\n  \"horaInicio\": null,\n  \"horaFin\": null,\n  \"objCurso\": null,\n  \"objEspacioFisico\": null\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "i18n - @Min en Español",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Mensaje en español', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.mensaje).to.include('mayor a 0');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept-Language", "value": "es" }],
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias/listarPorDocente/0",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias", "listarPorDocente", "0"]
+            }
+          }
+        },
+        {
+          "name": "i18n - @Min en Inglés",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Mensaje en inglés', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.mensaje.toLowerCase()).to.include('greater');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept-Language", "value": "en" }],
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias/listarPorDocente/0",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias", "listarPorDocente", "0"]
+            }
+          }
+        },
+        {
+          "name": "i18n - Regla Negocio en Español",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 404 o 400', function () {",
+                  "    pm.expect([404, 400]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "pm.test('Mensaje de error en español', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.mensaje.toLowerCase()).to.include('no existe');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept-Language", "value": "es" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"LUNES\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 999},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 1}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "i18n - Regla Negocio en Inglés",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 404 o 400', function () {",
+                  "    pm.expect([404, 400]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "pm.test('Mensaje de error en inglés', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.mensaje.toLowerCase()).to.match(/not exist|not found/);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept-Language", "value": "en" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"LUNES\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 999},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 1}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Servicios con Entities",
+      "item": [
+        {
+          "name": "Entity - Listar Cursos con Asignatura",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Cursos contienen información de Asignatura Entity', function () {",
+                  "    const cursos = pm.response.json();",
+                  "    pm.expect(cursos).to.be.an('array');",
+                  "    if(cursos.length > 0) {",
+                  "        pm.expect(cursos[0]).to.have.property('asignatura');",
+                  "        pm.expect(cursos[0].asignatura).to.have.property('nombre');",
+                  "        pm.expect(cursos[0].asignatura).to.have.property('codigo');",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/curso/cursosPorNombreAsignatura/Programación Orientada a Objetos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": [
+                "curso",
+                "cursosPorNombreAsignatura",
+                "Programación Orientada a Objetos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Entity - Franjas con Curso y Espacio Físico",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Franjas contienen Curso Entity', function () {",
+                  "    const franjas = pm.response.json();",
+                  "    if(franjas.length > 0) {",
+                  "        pm.expect(franjas[0].curso).to.exist;",
+                  "        pm.expect(franjas[0].curso).to.have.property('nombre');",
+                  "    }",
+                  "});",
+                  "",
+                  "pm.test('Franjas contienen Espacio Físico Entity', function () {",
+                  "    const franjas = pm.response.json();",
+                  "    if(franjas.length > 0) {",
+                  "        pm.expect(franjas[0].espacioFisico).to.exist;",
+                  "        pm.expect(franjas[0].espacioFisico).to.have.property('nombre');",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias/listarPorCurso/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias", "listarPorCurso", "1"]
+            }
+          }
+        },
+        {
+          "name": "Entity - Búsqueda JPA Query Methods",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Query method retorna Entity correctamente', function () {",
+                  "    const espacios = pm.response.json();",
+                  "    pm.expect(espacios).to.be.an('array');",
+                  "    if(espacios.length > 0) {",
+                  "        pm.expect(espacios[0]).to.have.property('espacioFisicoId');",
+                  "        pm.expect(espacios[0].capacidad).to.be.at.least(30);",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/espaciosFisicos/listarPorPatronYCapacidadMinima?patron=Aula&capacidadMinima=30",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["espaciosFisicos", "listarPorPatronYCapacidadMinima"],
+              "query": [
+                { "key": "patron", "value": "Aula" },
+                { "key": "capacidadMinima", "value": "30" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Entity - Franjas por Docente (Join Query)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Query con JOIN retorna entities correctamente', function () {",
+                  "    const franjas = pm.response.json();",
+                  "    pm.expect(franjas).to.be.an('array');",
+                  "    if(franjas.length > 0) {",
+                  "        pm.expect(franjas[0]).to.have.property('curso');",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias/listarPorDocente/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias", "listarPorDocente", "1"]
+            }
+          }
+        },
+        {
+          "name": "Entity - Crear con relaciones @ManyToOne",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('Relaciones @ManyToOne persistidas correctamente', function () {",
+                  "    const franja = pm.response.json();",
+                  "    pm.expect(franja.curso).to.exist;",
+                  "    pm.expect(franja.espacioFisico).to.exist;",
+                  "    pm.expect(franja.curso.cursoId).to.equal(2);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dia\": \"SABADO\",\n  \"horaInicio\": \"09:00\",\n  \"horaFin\": \"11:00\",\n  \"objCurso\": {\"cursoId\": 2},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 3}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "Entity - Verificar operaciones en cascada",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Relaciones @ManyToMany cargadas (Docentes)', function () {",
+                  "    const cursos = pm.response.json();",
+                  "    if(cursos.length > 0) {",
+                  "        pm.expect(cursos[0]).to.have.property('docentes');",
+                  "        pm.expect(cursos[0].docentes).to.be.an('array');",
+                  "        pm.expect(cursos[0]).to.have.property('asignatura');",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/curso/cursosPorNombreAsignatura/Bases de Datos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["curso", "cursosPorNombreAsignatura", "Bases de Datos"]
+            }
+          }
+        },
+        {
+          "name": "Entity - Verificar EAGER/LAZY loading",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('EAGER fetch incluye relaciones', function () {",
+                  "    const franjas = pm.response.json();",
+                  "    if(franjas.length > 0) {",
+                  "        pm.expect(franjas[0].curso).to.exist;",
+                  "        pm.expect(franjas[0].espacioFisico).to.exist;",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/franjasHorarias/listarPorCurso/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["franjasHorarias", "listarPorCurso", "1"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
