@@ -2,9 +2,7 @@ package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Contr
 
 import java.util.List;
 
-import co.edu.unicauca.asae.taller7.Docentes.Dominio.Modelos.Docente;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.Asignatura;
-import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.FranjaHoraria;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,6 +12,5 @@ public class CursoDTORespuesta {
     private Integer cursoId;
     private String nombre;
     private Asignatura asignatura;
-    private List<Docente> docentes;
-    private List<FranjaHoraria> franjasHorarias;
+    private List<DocenteDTORespuesta> docentes;
 }

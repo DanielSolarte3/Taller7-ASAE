@@ -13,7 +13,6 @@ import org.mapstruct.Mappings;
 public interface CursoMapper {
 
     @Mappings({
-        @Mapping(target = "docentes.cursos", ignore = true),
         @Mapping(target = "franjasHorarias", ignore = true)
     })
     Curso toModel(CursoEntity entity);

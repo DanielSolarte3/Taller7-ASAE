@@ -1,7 +1,6 @@
 package co.edu.unicauca.asae.taller7.Docentes.Infraestructura.Output.Persistencia.Entidades;
 
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Output.Persistencia.Entidades.CursoEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,7 +17,6 @@ public class DocenteEntity extends PersonaEntity {
     @JoinColumn(name = "oficinaId")
     private OficinaEntity oficina;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "docentes")
     private List<CursoEntity> cursos;
 
