@@ -33,7 +33,8 @@ public class GestionarFranjasController {
     @GetMapping("/listarPorDocente/{id}")
     public ResponseEntity<List<FranjaHorariaDTORespuesta>> listarPorDocente(
             @PathVariable @Min(value = 1, message = "El id debe ser mayor a 0") Integer id) {
-        List<FranjaHorariaDTORespuesta> listaFranjas = franjasHorariasDTOMapper.toDTORespuestaList(gestionarFranjasCUPort.listarFranjasPorDocenteIn(id));
+        List<FranjaHorariaDTORespuesta> listaFranjas = franjasHorariasDTOMapper
+                .toDTORespuestaList(gestionarFranjasCUPort.listarFranjasPorDocenteIn(id));
         return new ResponseEntity<>(listaFranjas, HttpStatus.OK);
     }
 

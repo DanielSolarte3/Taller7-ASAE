@@ -72,12 +72,12 @@ public class RestApiExceptionHandler {
                         final HttpServletRequest req,
                         final MethodArgumentNotValidException ex,
                         final Locale locale) {
-                
+
                 String errores = ex.getBindingResult()
-                        .getFieldErrors()
-                        .stream()
-                        .map(error -> error.getField() + ": " + error.getDefaultMessage())
-                        .collect(Collectors.joining(", "));
+                                .getFieldErrors()
+                                .stream()
+                                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                                .collect(Collectors.joining(", "));
 
                 final Error error = ErrorUtils.crearError(
                                 CodigoError.VIOLACION_REGLA_DE_NEGOCIO.getCodigo(),
