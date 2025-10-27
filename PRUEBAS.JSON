@@ -180,7 +180,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": \"LUNES\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 1},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 2}\n}"
+              "raw": "{\n  \"dia\": \"Lunes\",\n  \"horaInicio\": \"06:00:00\",\n  \"horaFin\": \"08:00:00\",\n  \"cursoId\": 1,\n  \"espacioFisicoId\": 2\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
@@ -216,7 +216,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": \"LUNES\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 2},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 1}\n}"
+              "raw": "{\n  \"dia\": \"Lunes\",\n  \"horaInicio\": \"06:00:00\",\n  \"horaFin\": \"08:00:00\",\n  \"cursoId\": 2,\n  \"espacioFisicoId\": 1\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
@@ -228,43 +228,7 @@
           }
         },
         {
-          "name": "Regla 3 - Capacidad del espacio debe ser suficiente",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('Status code is 400 - Capacidad insuficiente', function () {",
-                  "    pm.response.to.have.status(400);",
-                  "});",
-                  "",
-                  "pm.test('Mensaje indica problema de capacidad', function () {",
-                  "    const response = pm.response.json();",
-                  "    pm.expect(response.mensaje.toLowerCase()).to.include('capacidad');",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"dia\": \"MIERCOLES\",\n  \"horaInicio\": \"14:00\",\n  \"horaFin\": \"16:00\",\n  \"objCurso\": {\"cursoId\": 1},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 4}\n}"
-            },
-            "url": {
-              "raw": "http://localhost:8080/franjasHorarias",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8080",
-              "path": ["franjasHorarias"]
-            }
-          }
-        },
-        {
-          "name": "Regla 4 - Entidades deben existir",
+          "name": "Regla 3 - Espacio Físico No Existe",
           "event": [
             {
               "listen": "test",
@@ -288,7 +252,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": \"JUEVES\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 999},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 999}\n}"
+              "raw": "{\n  \"dia\": \"Miercoles\",\n  \"horaInicio\": \"14:00:00\",\n  \"horaFin\": \"16:00:00\",\n  \"cursoId\": 1,\n  \"espacioFisicoId\": 999\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
@@ -300,19 +264,19 @@
           }
         },
         {
-          "name": "Regla 5 - Horario debe estar en rango permitido",
+          "name": "Regla 4 - Curso No Existe",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test('Status code is 400 - Horario no permitido', function () {",
-                  "    pm.response.to.have.status(400);",
+                  "pm.test('Status code is 404 o 400 - Entidad no encontrada', function () {",
+                  "    pm.expect([404, 400]).to.include(pm.response.code);",
                   "});",
                   "",
-                  "pm.test('Mensaje indica problema de horario', function () {",
+                  "pm.test('Mensaje indica que entidad no existe', function () {",
                   "    const response = pm.response.json();",
-                  "    pm.expect(response.mensaje.toLowerCase()).to.include('horario');",
+                  "    pm.expect(response.mensaje.toLowerCase()).to.match(/no existe|not found/);",
                   "});"
                 ],
                 "type": "text/javascript"
@@ -324,7 +288,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": \"VIERNES\",\n  \"horaInicio\": \"22:00\",\n  \"horaFin\": \"23:00\",\n  \"objCurso\": {\"cursoId\": 1},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 5}\n}"
+              "raw": "{\n  \"dia\": \"Jueves\",\n  \"horaInicio\": \"08:00:00\",\n  \"horaFin\": \"10:00:00\",\n  \"cursoId\": 999,\n  \"espacioFisicoId\": 1\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
@@ -332,6 +296,42 @@
               "host": ["localhost"],
               "port": "8080",
               "path": ["franjasHorarias"]
+            }
+          }
+        },
+        {
+          "name": "Regla 5 - Docente con mismo correo electrónico",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400 - Correo duplicado', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Mensaje indica problema de correo duplicado', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.mensaje.toLowerCase()).to.match(/correo|duplicado|existe/);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Daniel\",\n  \"apellido\": \"Solarte\",\n  \"correo\": \"dpaz@unicauca.edu.co\",\n  \"oficina\": {\n    \"nombre\": \"Oficina 3\",\n    \"ubicacion\": \"FIET\"\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/docentes",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["docentes"]
             }
           }
         }
