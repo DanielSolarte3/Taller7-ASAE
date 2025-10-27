@@ -550,7 +550,7 @@
                   "",
                   "pm.test('Datos coinciden con lo enviado', function () {",
                   "    const franja = pm.response.json();",
-                  "    pm.expect(franja.dia).to.equal('SABADO');",
+                  "    pm.expect(franja.dia).to.equal('Sabado');",
                   "});"
                 ],
                 "type": "text/javascript"
@@ -562,7 +562,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": \"SABADO\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 5},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 7}\n}"
+              "raw": "{\n  \"dia\": \"Sabado\",\n  \"horaInicio\": \"08:00:00\",\n  \"horaFin\": \"10:00:00\",\n  \"cursoId\": 5,\n  \"espacioFisicoId\": 7\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
@@ -598,7 +598,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": \"DOMINGO\",\n  \"horaInicio\": \"10:00\",\n  \"horaFin\": \"12:00\",\n  \"objCurso\": {\"cursoId\": 6},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 8}\n}"
+              "raw": "{\n  \"dia\": \"Lunes\",\n  \"horaInicio\": \"10:00:00\",\n  \"horaFin\": \"12:00:00\",\n  \"cursoId\": 6,\n  \"espacioFisicoId\": 8\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
@@ -635,7 +635,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": \"LUNES\",\n  \"horaInicio\": \"14:30\",\n  \"horaFin\": \"16:30\",\n  \"objCurso\": {\"cursoId\": 5},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 6}\n}"
+              "raw": "{\n  \"dia\": \"Lunes\",\n  \"horaInicio\": \"14:00:00\",\n  \"horaFin\": \"16:00:00\",\n  \"cursoId\": 5,\n  \"espacioFisicoId\": 6\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
@@ -672,7 +672,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": \"MARTES\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"09:00\",\n  \"objCurso\": {\"cursoId\": 1},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 5}\n}"
+              "raw": "{\n  \"dia\": \"Martes\",\n  \"horaInicio\": \"08:00:00\",\n  \"horaFin\": \"10:00:00\",\n  \"cursoId\": 1,\n  \"espacioFisicoId\": 3\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",

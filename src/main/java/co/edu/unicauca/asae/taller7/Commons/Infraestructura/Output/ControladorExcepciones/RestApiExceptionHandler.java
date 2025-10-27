@@ -73,11 +73,28 @@ public class RestApiExceptionHandler {
                         final MethodArgumentNotValidException ex,
                         final Locale locale) {
 
-                String errores = ex.getBindingResult()
+                // Errores de campos
+                String erroresCampos = ex.getBindingResult()
                                 .getFieldErrors()
                                 .stream()
                                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                                 .collect(Collectors.joining(", "));
+
+                // Errores globales (validaciones a nivel de clase)
+                String erroresGlobales = ex.getBindingResult()
+                                .getGlobalErrors()
+                                .stream()
+                                .map(error -> error.getDefaultMessage())
+                                .collect(Collectors.joining(", "));
+
+                // Combinar ambos tipos de errores
+                String errores = erroresCampos;
+                if (!erroresGlobales.isEmpty()) {
+                        if (!errores.isEmpty()) {
+                                errores += ", ";
+                        }
+                        errores += erroresGlobales;
+                }
 
                 final Error error = ErrorUtils.crearError(
                                 CodigoError.VIOLACION_REGLA_DE_NEGOCIO.getCodigo(),
