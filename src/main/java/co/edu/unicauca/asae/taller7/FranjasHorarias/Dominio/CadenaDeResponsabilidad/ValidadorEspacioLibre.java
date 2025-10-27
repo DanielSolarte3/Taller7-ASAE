@@ -16,10 +16,10 @@ public class ValidadorEspacioLibre extends ValidadorBase {
                                             franjaHoraria.getDia(), franjaHoraria.getHoraInicio(),
                                             franjaHoraria.getHoraFin())){
             formateadorResultados.retornarRespuestaErrorReglaDeNegocio(
-                    "No se permite asignar una franja horaria a un espacio físico (Id espacio: "+ franjaHoraria.getEspacioFisico().getEspacioFisicoId()
-                            +") que está ocupado en el día y hora de inicio y hora fin de la nueva franja.");
+                    "franjaHoraria.espacio.ocupado");
             return false;
         }
         return true;
     }
 }
+

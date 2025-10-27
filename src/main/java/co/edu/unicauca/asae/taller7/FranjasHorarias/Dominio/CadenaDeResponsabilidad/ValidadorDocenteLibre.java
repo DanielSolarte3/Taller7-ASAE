@@ -17,9 +17,8 @@ public class ValidadorDocenteLibre extends ValidadorBase{
         for(Docente docente : franjaHoraria.getCurso().getDocentes()){
             if (franjasGateway.docenteEstaOcupado(docente.getPersonaId(), franjaHoraria.getDia(), franjaHoraria.getHoraInicio(), franjaHoraria.getHoraFin())){
                 formateadorResultados.retornarRespuestaErrorReglaDeNegocio(
-                                                    "No se permite asignar una franja horaria a un docente (Id docente: "+ docente.getPersonaId() +
-                                                            ") que está dictando un curso en el día, hora" +
-                                                            " de inicio y hora fin de la nueva franja.");
+                    "franjaHoraria.docente.ocupado"
+                );
                 return false;
             }
         }

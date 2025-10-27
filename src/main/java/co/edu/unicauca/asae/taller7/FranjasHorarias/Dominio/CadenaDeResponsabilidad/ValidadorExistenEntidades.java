@@ -16,8 +16,7 @@ public class ValidadorExistenEntidades extends ValidadorBase {
     protected boolean manejarValidacion(FranjaHoraria franjaHoraria) {
         EspacioFisico espacioFisico = franjasGateway.getEspacioFisicoById(franjaHoraria.getEspacioFisico().getEspacioFisicoId());
         if (espacioFisico == null) {
-            formateadorResultados.retornarRespuestaErrorEntidadNoExiste("No existe el espacio fisico con id "+
-                                                                                franjaHoraria.getEspacioFisico().getEspacioFisicoId());
+            formateadorResultados.retornarRespuestaErrorEntidadNoExiste("franjaHoraria.espacioFisico.noExiste");
             return false;
         }
         franjaHoraria.setEspacioFisico(espacioFisico);
@@ -32,8 +31,7 @@ public class ValidadorExistenEntidades extends ValidadorBase {
 
         Curso curso = franjasGateway.getCursoById(franjaHoraria.getCurso().getCursoId());
         if(curso == null) {
-            formateadorResultados.retornarRespuestaErrorEntidadNoExiste("No existe el curso con id "+
-                                                                                franjaHoraria.getCurso().getCursoId());
+            formateadorResultados.retornarRespuestaErrorEntidadNoExiste("franjaHoraria.curso.noExiste");
             return false;
         }
         franjaHoraria.setCurso(curso);
@@ -41,3 +39,4 @@ public class ValidadorExistenEntidades extends ValidadorBase {
         return true;
     }
 }
+
