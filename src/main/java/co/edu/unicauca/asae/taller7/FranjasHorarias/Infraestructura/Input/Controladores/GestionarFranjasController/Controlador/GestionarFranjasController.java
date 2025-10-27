@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 
 @RestController
@@ -38,7 +39,7 @@ public class GestionarFranjasController {
 
     @PostMapping()
     public ResponseEntity<FranjaHorariaDTORespuesta> guardarFranjaHoraria(
-            @RequestBody FranjaHorariaDTOPeticion franjaHorariaDTO) {
+            @Valid @RequestBody FranjaHorariaDTOPeticion franjaHorariaDTO) {
         FranjaHorariaDTORespuesta franjaHorariaDTORespuesta = franjasHorariasDTOMapper.toDTORespuesta(
                 gestionarFranjasCUPort.guardarFranjaIn(franjasHorariasDTOMapper.toModelFromPeticion(franjaHorariaDTO)));
         return new ResponseEntity<>(franjaHorariaDTORespuesta, HttpStatus.CREATED);

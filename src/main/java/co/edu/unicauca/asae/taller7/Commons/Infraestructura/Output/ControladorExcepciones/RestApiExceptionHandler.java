@@ -5,6 +5,7 @@ import jakarta.validation.ConstraintViolationException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -16,6 +17,7 @@ import co.edu.unicauca.asae.taller7.Commons.Infraestructura.Output.ControladorEx
 import co.edu.unicauca.asae.taller7.Commons.Infraestructura.Output.ControladorExcepciones.ExcepcionesPropias.ReglaNegocioException;
 
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class RestApiExceptionHandler {
@@ -62,5 +64,28 @@ public class RestApiExceptionHandler {
         @ExceptionHandler(ConstraintViolationException.class)
         public ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException e) {
                 return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        @ResponseStatus(HttpStatus.BAD_REQUEST)
+        @ExceptionHandler(MethodArgumentNotValidException.class)
+        public ResponseEntity<Error> handleMethodArgumentNotValidException(
+                        final HttpServletRequest req,
+                        final MethodArgumentNotValidException ex,
+                        final Locale locale) {
+                
+                String errores = ex.getBindingResult()
+                        .getFieldErrors()
+                        .stream()
+                        .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                        .collect(Collectors.joining(", "));
+
+                final Error error = ErrorUtils.crearError(
+                                CodigoError.VIOLACION_REGLA_DE_NEGOCIO.getCodigo(),
+                                errores,
+                                HttpStatus.BAD_REQUEST.value())
+                                .setUrl(req.getRequestURL().toString())
+                                .setMetodo(req.getMethod());
+
+                return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
 }
