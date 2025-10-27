@@ -32,20 +32,21 @@ public class CapacidadSuficienteValidator
 
         try {
             // Obtener el curso
-            Optional<CursoEntity> curso =  cursoRepository.findById(franja.getCursoId());
+            Optional<CursoEntity> curso = cursoRepository.findById(franja.getCursoId());
 
             if (!curso.isPresent()) {
-                return false;
+                return true; // Permitir que la lógica de negocio valide la existencia
             }
 
             // Obtener el espacio físico
             Optional<EspacioFisicoEntity> espacioFisico = espacioFisicoRepository.findById(franja.getEspacioFisicoId());
 
             if (!espacioFisico.isPresent()) {
-                return false;
+                return true; // Permitir que la lógica de negocio valide la existencia
             }
 
-            // La capacidad del espacio físico debe ser mayor o igual al número de estudiantes del curso
+            // La capacidad del espacio físico debe ser mayor o igual al número de
+            // estudiantes del curso
             if (espacioFisico.get().getCapacidad() < curso.get().getCapacidadMatricula()) {
                 return false;
             }
