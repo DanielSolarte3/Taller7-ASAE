@@ -312,7 +312,7 @@
                   "",
                   "pm.test('Mensaje indica problema de correo duplicado', function () {",
                   "    const response = pm.response.json();",
-                  "    pm.expect(response.mensaje.toLowerCase()).to.match(/correo|duplicado|existe/);",
+                  "    pm.expect(response.mensaje.toLowerCase()).to.match(/correo|email|duplicado|asociado/);",
                   "});"
                 ],
                 "type": "text/javascript"

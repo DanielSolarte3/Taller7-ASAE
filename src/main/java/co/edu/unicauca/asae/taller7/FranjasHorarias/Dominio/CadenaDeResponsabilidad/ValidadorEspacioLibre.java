@@ -6,20 +6,20 @@ import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.FranjaHorari
 
 public class ValidadorEspacioLibre extends ValidadorBase {
 
-    public ValidadorEspacioLibre(FormateadorResultadosPort franjasFormateadorResultados, GestionarFranjasGatewayPort franjasGateway) {
+    public ValidadorEspacioLibre(FormateadorResultadosPort franjasFormateadorResultados,
+            GestionarFranjasGatewayPort franjasGateway) {
         super(franjasFormateadorResultados, franjasGateway);
     }
 
     @Override
     protected boolean manejarValidacion(FranjaHoraria franjaHoraria) {
         if (franjasGateway.espacioEstaOcupado(franjaHoraria.getEspacioFisico().getEspacioFisicoId(),
-                                            franjaHoraria.getDia(), franjaHoraria.getHoraInicio(),
-                                            franjaHoraria.getHoraFin())){
-            formateadorResultados.retornarRespuestaErrorReglaDeNegocio(
+                franjaHoraria.getDia(), franjaHoraria.getHoraInicio(),
+                franjaHoraria.getHoraFin())) {
+            formateadorResultados.retornarRespuestaErrorReglaDeNegocioI18n(
                     "franjaHoraria.espacio.ocupado");
             return false;
         }
         return true;
     }
 }
-

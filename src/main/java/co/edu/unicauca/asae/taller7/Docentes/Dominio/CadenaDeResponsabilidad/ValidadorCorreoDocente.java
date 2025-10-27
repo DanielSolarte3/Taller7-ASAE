@@ -14,8 +14,8 @@ public class ValidadorCorreoDocente extends ValidadorBase {
     @Override
     protected boolean manejarValidacion(Docente docente) {
         String correo = docente.getCorreo();
-        if (docentesGateway.existeCorreoDocente(correo)){
-            formateadorResultados.retornarRespuestaErrorReglaDeNegocio("El correo electrónico "+ correo + " ya está asociado a otro docente.");
+        if (docentesGateway.existeCorreoDocente(correo)) {
+            formateadorResultados.retornarRespuestaErrorReglaDeNegocioI18n("docente.correo.duplicado");
             return false;
         }
         return true;
