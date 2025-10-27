@@ -216,7 +216,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": \"Lunes\",\n  \"horaInicio\": \"06:00:00\",\n  \"horaFin\": \"08:00:00\",\n  \"cursoId\": 2,\n  \"espacioFisicoId\": 1\n}"
+              "raw": "{\n  \"dia\": \"Lunes\",\n  \"horaInicio\": \"16:00:00\",\n  \"horaFin\": \"18:00:00\",\n  \"cursoId\": 2,\n  \"espacioFisicoId\": 6\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
