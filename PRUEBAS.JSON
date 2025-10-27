@@ -1324,7 +1324,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": \"Sabado\",\n  \"horaInicio\": \"10:00:00\",\n  \"horaFin\": \"12:00:00\",\n  \"cursoId\": 2,\n  \"espacioFisicoId\": 3\n}"
+              "raw": "{\n  \"dia\": \"Sabado\",\n  \"horaInicio\": \"10:00:00\",\n  \"horaFin\": \"12:00:00\",\n  \"cursoId\": 2,\n  \"espacioFisicoId\": 6\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
@@ -1403,6 +1403,52 @@
               "host": ["localhost"],
               "port": "8080",
               "path": ["franjasHorarias", "listarPorCurso", "1"]
+            }
+          }
+        },
+        {
+          "name": "Entity - Crear Docente con Oficina (relación @OneToOne)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('Relación @OneToOne con Oficina persistida correctamente', function () {",
+                  "    const docente = pm.response.json();",
+                  "    pm.expect(docente.oficina).to.exist;",
+                  "    pm.expect(docente.oficina.nombre).to.equal('Oficina 600');",
+                  "    pm.expect(docente.oficina.ubicacion).to.equal('Edificio FIET Piso 6');",
+                  "});",
+                  "",
+                  "pm.test('Docente creado con todos los atributos', function () {",
+                  "    const docente = pm.response.json();",
+                  "    pm.expect(docente).to.have.property('personaId');",
+                  "    pm.expect(docente.nombre).to.equal('Maria');",
+                  "    pm.expect(docente.apellido).to.equal('Garcia');",
+                  "    pm.expect(docente.correo).to.equal('mgarcia@unicauca.edu.co');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Maria\",\n  \"apellido\": \"Garcia\",\n  \"correo\": \"mgarcia@unicauca.edu.co\",\n  \"oficina\": {\n    \"nombre\": \"Oficina 600\",\n    \"ubicacion\": \"Edificio FIET Piso 6\"\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/docentes",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["docentes"]
             }
           }
         }
