@@ -5,4 +5,7 @@ import lombok.Data;
 @Data
 public class EspacioFisicoDTORespuesta {
     private Integer espacioFisicoId;
+    private String nombre;
+    private Integer capacidad;
+    private Boolean estado;
 }

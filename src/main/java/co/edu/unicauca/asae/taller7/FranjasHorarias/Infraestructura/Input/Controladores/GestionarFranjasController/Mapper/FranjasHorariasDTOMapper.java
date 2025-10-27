@@ -3,6 +3,7 @@ package co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Contr
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Dominio.Modelos.FranjaHoraria;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarFranjasController.DTOPeticion.FranjaHorariaDTOPeticion;
 import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarFranjasController.DTORespuesta.FranjaHorariaDTORespuesta;
+import co.edu.unicauca.asae.taller7.FranjasHorarias.Infraestructura.Input.Controladores.GestionarFranjasController.DTORespuesta.FranjaHorariaDeCursoDTORespuesta;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,9 +18,13 @@ public interface FranjasHorariasDTOMapper {
 
     FranjaHorariaDTORespuesta toDTORespuesta(FranjaHoraria franjaHoraria);
 
+    FranjaHorariaDeCursoDTORespuesta toDTORespuestaDeCurso(FranjaHoraria franjaHoraria);
+
     List<FranjaHoraria> toModelFromRespuestaList(List<FranjaHorariaDTORespuesta> franjaHorariaDTO);
 
     List<FranjaHorariaDTORespuesta> toDTORespuestaList(List<FranjaHoraria> franjaHoraria);
+
+    List<FranjaHorariaDeCursoDTORespuesta> toDTORespuestaDeCursoList(List<FranjaHoraria> franjaHoraria);
 
     @Mappings({
             @Mapping(source = "cursoId", target = "curso.cursoId"),

@@ -21,7 +21,7 @@ public class FranjaHorariaEntity {
     @Column(nullable = false)
     private LocalTime horaFin;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cursoId")
     private CursoEntity curso;
 
