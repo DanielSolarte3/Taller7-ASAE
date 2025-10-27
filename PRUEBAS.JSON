@@ -755,7 +755,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": \"LUNES\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 1},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 4}\n}"
+              "raw": "{\n  \"dia\": \"Lunes\",\n  \"horaInicio\": \"08:00:00\",\n  \"horaFin\": \"10:00:00\",\n  \"cursoId\": 1,\n  \"espacioFisicoId\": 5\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
@@ -791,7 +791,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": \"MIERCOLES\",\n  \"horaInicio\": \"16:00\",\n  \"horaFin\": \"18:00\",\n  \"objCurso\": {\"cursoId\": 5},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 7}\n}"
+              "raw": "{\n  \"dia\": \"Jueves\",\n  \"horaInicio\": \"20:00:00\",\n  \"horaFin\": \"22:00:00\",\n  \"cursoId\": 5,\n  \"espacioFisicoId\": 9\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
@@ -827,7 +827,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": \"JUEVES\",\n  \"horaInicio\": \"25:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 1},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 1}\n}"
+              "raw": "{\n  \"dia\": \"Jueves\",\n  \"horaInicio\": \"08:30:00\",\n  \"horaFin\": \"10:00:00\",\n  \"cursoId\": 1,\n  \"espacioFisicoId\": 1\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
@@ -863,7 +863,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": \"VIERNES\",\n  \"horaInicio\": \"14:30\",\n  \"horaFin\": \"16:30\",\n  \"objCurso\": {\"cursoId\": 6},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 8}\n}"
+              "raw": "{\n  \"dia\": \"Viernes\",\n  \"horaInicio\": \"14:00:00\",\n  \"horaFin\": \"16:00:00\",\n  \"cursoId\": 6,\n  \"espacioFisicoId\": 8\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
@@ -940,7 +940,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": null,\n  \"horaInicio\": null,\n  \"horaFin\": null,\n  \"objCurso\": null,\n  \"objEspacioFisico\": null\n}"
+              "raw": "{\n  \"dia\": null,\n  \"horaInicio\": null,\n  \"horaFin\": null,\n  \"cursoId\": null,\n  \"espacioFisicoId\": null\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
@@ -980,7 +980,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": null,\n  \"horaInicio\": null,\n  \"horaFin\": null,\n  \"objCurso\": null,\n  \"objEspacioFisico\": null\n}"
+              "raw": "{\n  \"dia\": null,\n  \"horaInicio\": null,\n  \"horaFin\": null,\n  \"cursoId\": null,\n  \"espacioFisicoId\": null\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
@@ -1083,7 +1083,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": \"LUNES\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 999},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 1}\n}"
+              "raw": "{\n  \"dia\": \"Lunes\",\n  \"horaInicio\": \"08:00:00\",\n  \"horaFin\": \"10:00:00\",\n  \"cursoId\": 999,\n  \"espacioFisicoId\": 1\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
@@ -1122,7 +1122,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": \"LUNES\",\n  \"horaInicio\": \"08:00\",\n  \"horaFin\": \"10:00\",\n  \"objCurso\": {\"cursoId\": 999},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 1}\n}"
+              "raw": "{\n  \"dia\": \"Lunes\",\n  \"horaInicio\": \"08:00:00\",\n  \"horaFin\": \"10:00:00\",\n  \"cursoId\": 999,\n  \"espacioFisicoId\": 1\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
@@ -1167,14 +1167,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/curso/cursosPorNombreAsignatura/Programación Orientada a Objetos",
+              "raw": "http://localhost:8080/curso/cursosPorNombreAsignatura/Sistemas Distribuidos",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8080",
               "path": [
                 "curso",
                 "cursosPorNombreAsignatura",
-                "Programación Orientada a Objetos"
+                "Sistemas Distribuidos"
               ]
             }
           }
@@ -1324,7 +1324,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dia\": \"SABADO\",\n  \"horaInicio\": \"09:00\",\n  \"horaFin\": \"11:00\",\n  \"objCurso\": {\"cursoId\": 2},\n  \"objEspacioFisico\": {\"espacioFisicoId\": 3}\n}"
+              "raw": "{\n  \"dia\": \"Sabado\",\n  \"horaInicio\": \"10:00:00\",\n  \"horaFin\": \"12:00:00\",\n  \"cursoId\": 2,\n  \"espacioFisicoId\": 3\n}"
             },
             "url": {
               "raw": "http://localhost:8080/franjasHorarias",
