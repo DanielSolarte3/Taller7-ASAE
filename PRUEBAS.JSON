@@ -78,7 +78,7 @@
                   "    const cursos = pm.response.json();",
                   "    if(cursos.length > 0) {",
                   "        cursos.forEach(curso => {",
-                  "            pm.expect(curso.asignatura.nombre).to.equal('Arquitectura de Software');",
+                  "            pm.expect(curso.asignatura.nombre).to.equal('Sistemas Distribuidos');",
                   "        });",
                   "    }",
                   "});"
@@ -91,14 +91,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/curso/cursosPorNombreAsignatura/Arquitectura de Software",
+              "raw": "http://localhost:8080/curso/cursosPorNombreAsignatura/Sistemas Distribuidos",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8080",
               "path": [
                 "curso",
                 "cursosPorNombreAsignatura",
-                "Arquitectura de Software"
+                "Sistemas Distribuidos"
               ]
             }
           }
